@@ -11,7 +11,6 @@ import {
   Maximize2, Eye, Compass, ShieldCheck, Wifi, Zap, Users, Award, Smile
 } from "lucide-react";
 import { MenuItem, CartItem, VoucherConfig, PackageItem, CafeSpot } from "@/lib/types";
-import CircularGallery from "@/components/CircularGallery";
 
 // ─── Brand & Config ─────────────────────────────────────────────────────
 const BRAND_NAME = "Kopi Tenang Jiwa";
@@ -19,14 +18,6 @@ const BRAND_TAGLINE = "Seduh perlahan, nikmati detik ini.";
 const BRAND_ADDRESS = "Jl. Ketenangan No. 8, Bandung";
 const WA_NUMBER = "6289655223792";
 const SHEETDB_API_URL = "https://sheetdb.io/api/v1/YOUR_API_ID";
-
-const KOPI_TENANG_JIWA_SPOTS = [
-  { image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=1000", text: "Spot 1: Indoor Lounge Utama" },
-  { image: "https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&q=80&w=1000", text: "Spot 2: Outdoor Garden Patio" },
-  { image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=1000", text: "Spot 3: Working & Nugas Nook" },
-  { image: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&q=80&w=1000", text: "Spot 4: Artisan Barista Coffee Bar" },
-  { image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&q=80&w=1000", text: "Spot 5: Rooftop Senja Terrace" },
-];
 
 
 const BANK_ACCOUNTS = [
@@ -458,72 +449,6 @@ const TESTIMONIALS = [
   },
 ];
 
-// ─── Cafe Spots Data (Gallery & Spots Showcase) ──────────────────────────
-const CAFE_SPOTS: CafeSpot[] = [
-  {
-    id: "spot-1",
-    title: "Warm Wood Lounge",
-    category: "Indoor Lounge",
-    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=800",
-    description: "Area indoor ber-AC dengan sofa empuk, pencahayaan hangat, dan suasana menenangkan cocok untuk berdiskusi santai.",
-    ambiance: "Hangat, Calm & Cozy",
-    capacity: "2 - 6 Orang per Meja",
-    features: ["Ruang Full AC", "Stopkontak Setiap Kursi", "Bebas Asap Rokok", "Sofa Cushion Premium"],
-  },
-  {
-    id: "spot-2",
-    title: "Outdoor Garden Patio",
-    category: "Outdoor Garden",
-    image: "https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&q=80&w=800",
-    description: "Taman terbuka hijau berangin sejuk dengan tanaman tropis & ambient lighting cantik di malam hari.",
-    ambiance: "Sejuk, Asri & Aesthetic",
-    capacity: "4 - 8 Orang",
-    features: ["Smoking Area Friendly", "Rindang Tanaman Hijau", "Lampu Fairy Light Romantis", "Pet-Friendly Outer Zone"],
-  },
-  {
-    id: "spot-3",
-    title: "Focused Nugas Corner",
-    category: "Working Nook",
-    image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800",
-    description: "Sudut tenang untuk kerja (WFH) dan nugas, dilengkapi meja kayu ergonomis & koneksi WiFi 100Mbps.",
-    ambiance: "Hening, Fokus & Produktif",
-    capacity: "1 - 2 Orang per Bilik",
-    features: ["Stopkontak Ganda tiap Kursi", "WiFi High Speed 100Mbps", "Lampu Baca Individual", "Quiet Zone Non-Bisa Bising"],
-  },
-  {
-    id: "spot-4",
-    title: "Artisan Barista Counter",
-    category: "Barista Corner",
-    image: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&q=80&w=800",
-    description: "Area slow bar langsung di mana pengunjung dapat menikmati aroma kopi segar & menyaksikan penyeduhan espresso murni.",
-    ambiance: "Aroma Espresso & Interactive Bar",
-    capacity: "Direct Bar Seating",
-    features: ["Manual Brew Showcase", "Diskusi Varian Biji Kopi", "Aroma Kopi Menyegarkan", "Interaktif Bareng Barista"],
-  },
-  {
-    id: "spot-5",
-    title: "Rooftop Senja Terrace",
-    category: "Rooftop Terrace",
-    image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&q=80&w=800",
-    description: "Spot lantai atas terbuka untuk menikmati panorama langit sore Kota Bandung dengan tiupan angin alami.",
-    ambiance: "Chill, Chill Vibe & Sunset View",
-    capacity: "2 - 4 Orang",
-    features: ["View Sunset & Sky Deck", "Open-Air Natural Breeze", "Musik Akustik Santai", "Spot Foto Instagramable"],
-  },
-  {
-    id: "spot-6",
-    title: "Mezzanine Group Discussion",
-    category: "Indoor Lounge",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800",
-    description: "Meja kelompok semi-privat di lantai dua untuk rapat tim kecil, tugas kelompok, atau mini perayaan ulang tahun.",
-    ambiance: "Privat, Modis & Luas",
-    capacity: "6 - 12 Orang",
-    features: ["Meja Komunal Panjang", "Semi-Private Zone", "Stopkontak Banyak", "Dekat Kasir & Toilet"],
-  },
-];
-
-const SPOT_CATEGORIES = ["Semua Spot", "Indoor Lounge", "Outdoor Garden", "Working Nook", "Barista Corner", "Rooftop Terrace"];
-
 // ─── Constants ───────────────────────────────────────────────────────────
 const categories = [
   { key: "All", label: "Semua", icon: "✨" },
@@ -588,8 +513,6 @@ export default function Template3() {
   // Navbar & Spot Gallery States
   const [isPaketDropdownOpen, setIsPaketDropdownOpen] = useState(false);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
-  const [selectedSpotCategory, setSelectedSpotCategory] = useState("Semua Spot");
-  const [activeSpotModal, setActiveSpotModal] = useState<CafeSpot | null>(null);
 
   const menuSectionRef = useRef<HTMLDivElement>(null);
 
@@ -719,10 +642,7 @@ export default function Template3() {
     return matchCat && matchSearch && matchMood;
   }), [items, category, search, selectedMood]);
 
-  const filteredSpots = useMemo(() => {
-    if (selectedSpotCategory === "Semua Spot") return CAFE_SPOTS;
-    return CAFE_SPOTS.filter((spot) => spot.category === selectedSpotCategory);
-  }, [selectedSpotCategory]);
+
 
   // ── Cart Actions ──
   const showToast = (message: string) => {
@@ -1151,18 +1071,6 @@ export default function Template3() {
                 Kopi Tenang Jiwa lahir dari filosofi menyajikan racikan biji kopi Nusantara pilihan berpadu dengan suasana hangat dan tenang. Di sini, Anda bukan sekadar menikmati kopi murni, tetapi juga jeda sejenak dari hiruk-pikuk rutinitas harian.
               </p>
             </div>
-
-            {/* ReactBits CircularGallery Component (5 Spots of 1 Venue) */}
-            <div style={{ height: '550px', position: 'relative' }} className="my-4">
-              <CircularGallery 
-                items={KOPI_TENANG_JIWA_SPOTS} 
-                bend={3} 
-                textColor="#ffffff" 
-                borderRadius={0.05} 
-                scrollEase={0.02}
-              />
-            </div>
-
             {/* Stats Row */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8 border-t border-latte/50 text-center">
               <div className="p-4">
@@ -1182,114 +1090,6 @@ export default function Template3() {
                 <p className="text-xs text-stone font-light mt-1">🌿 Biji Kopi Lokal Nusantara</p>
               </div>
             </div>
-          </div>
-        </motion.section>
-
-        {/* Spot Cafe Gallery Section */}
-        <motion.section 
-          id="gallery-section" 
-          initial={{ opacity: 0, y: 30 }} 
-          whileInView={{ opacity: 1, y: 0 }} 
-          viewport={{ once: true }} 
-          transition={{ duration: 0.8 }}
-          className="mb-24 scroll-mt-28"
-        >
-          <div className="text-center max-w-2xl mx-auto mb-10">
-            <div className="inline-flex items-center gap-2 bg-sage/10 px-4 py-1.5 rounded-full text-xs text-sage font-semibold mb-3 border border-sage/20">
-              <Eye className="w-3.5 h-3.5" />
-              <span>Galeri & Sudut Estetik Kedai</span>
-            </div>
-            <h3 className="font-serif text-3xl md:text-4xl text-charcoal mb-3">
-              Jelajahi Spot Favorite Kopi Tenang Jiwa
-            </h3>
-            <p className="text-stone text-sm max-w-lg mx-auto font-light">
-              Intip suasana tenang dan sudut-sudut estetik kedai kami untuk nemenin waktu santai, nugas, atau kumpul bareng sahabat.
-            </p>
-          </div>
-
-          {/* Spot Category Filter Tabs */}
-          <div className="flex gap-2 overflow-x-auto scrollbar-hide justify-start md:justify-center mb-10 pb-2">
-            {SPOT_CATEGORIES.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setSelectedSpotCategory(cat)}
-                className={`px-5 py-2.5 rounded-full text-xs md:text-sm font-medium whitespace-nowrap transition-all duration-300 ${
-                  selectedSpotCategory === cat
-                    ? "bg-charcoal text-white shadow-md scale-105"
-                    : "bg-white border border-latte text-charcoal hover:bg-bone"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-
-          {/* Spot Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredSpots.map((spot, idx) => (
-              <motion.div
-                key={spot.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                whileHover={{ y: -6 }}
-                onClick={() => setActiveSpotModal(spot)}
-                className="bg-white rounded-3xl overflow-hidden border border-latte shadow-elegant group cursor-pointer flex flex-col justify-between"
-              >
-                <div>
-                  {/* Spot Image */}
-                  <div className="h-56 overflow-hidden relative">
-                    <img
-                      src={spot.image}
-                      alt={spot.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                    <div className="absolute top-4 left-4 z-10">
-                      <span className="bg-white/95 backdrop-blur-md text-charcoal text-[11px] font-semibold px-3 py-1 rounded-full shadow-sm border border-latte">
-                        {spot.category}
-                      </span>
-                    </div>
-
-                    {/* Hover Overlay Zoom Icon */}
-                    <div className="absolute inset-0 bg-charcoal/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-white gap-2">
-                      <div className="w-11 h-11 rounded-full bg-white/90 text-charcoal flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                        <Maximize2 className="w-5 h-5 text-sage" />
-                      </div>
-                      <span className="text-xs font-medium tracking-wide">Lihat Detail Spot</span>
-                    </div>
-                  </div>
-
-                  {/* Spot Content */}
-                  <div className="p-6">
-                    <div className="flex items-center justify-between gap-2 mb-2">
-                      <h4 className="font-serif text-lg font-semibold text-charcoal group-hover:text-sage transition-colors">
-                        {spot.title}
-                      </h4>
-                    </div>
-                    <p className="text-xs text-stone font-light leading-relaxed mb-4 line-clamp-2">
-                      {spot.description}
-                    </p>
-
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-2 text-[10px] text-stone">
-                      <span className="bg-bone px-2.5 py-1 rounded-full border border-latte flex items-center gap-1 font-medium">
-                        ✨ {spot.ambiance}
-                      </span>
-                      <span className="bg-sage/10 text-sage px-2.5 py-1 rounded-full border border-sage/20 font-medium">
-                        👥 {spot.capacity}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Footer Action */}
-                <div className="px-6 pb-6 pt-0 flex items-center justify-between text-xs text-sage font-medium group-hover:translate-x-1 transition-transform">
-                  <span>Pratinjau Sudut</span>
-                  <ChevronRight className="w-4 h-4" />
-                </div>
-              </motion.div>
-            ))}
           </div>
         </motion.section>
 
@@ -1991,109 +1791,7 @@ export default function Template3() {
         )}
       </AnimatePresence>
 
-      {/* Spot Lightbox Preview Modal */}
-      <AnimatePresence>
-        {activeSpotModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setActiveSpotModal(null)}
-            className="fixed inset-0 z-[115] bg-charcoal/70 backdrop-blur-md flex items-center justify-center p-4 md:p-6"
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              onClick={(e) => e.stopPropagation()}
-              className="bg-white w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col md:flex-row relative border border-latte"
-            >
-              {/* Close Button */}
-              <button
-                onClick={() => setActiveSpotModal(null)}
-                className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-charcoal/60 text-white hover:bg-charcoal flex items-center justify-center backdrop-blur-sm transition-colors"
-                aria-label="Tutup Modal"
-              >
-                <X className="w-5 h-5" />
-              </button>
 
-              {/* Spot Image Half */}
-              <div className="w-full md:w-1/2 h-64 md:h-auto relative bg-charcoal overflow-hidden">
-                <img
-                  src={activeSpotModal.image}
-                  alt={activeSpotModal.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent md:hidden" />
-                <div className="absolute bottom-4 left-4 md:hidden text-white">
-                  <span className="bg-sage/90 text-white text-[10px] font-semibold px-3 py-1 rounded-full">
-                    {activeSpotModal.category}
-                  </span>
-                  <h3 className="font-serif text-xl font-bold mt-1">{activeSpotModal.title}</h3>
-                </div>
-              </div>
-
-              {/* Spot Details Half */}
-              <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between overflow-y-auto custom-scrollbar">
-                <div>
-                  <div className="hidden md:flex items-center gap-2 mb-3">
-                    <span className="bg-sage/15 text-sage text-xs font-semibold px-3.5 py-1 rounded-full border border-sage/30">
-                      {activeSpotModal.category}
-                    </span>
-                    <span className="text-xs font-medium text-stone">✨ {activeSpotModal.ambiance}</span>
-                  </div>
-
-                  <h3 className="hidden md:block font-serif text-2xl font-bold text-charcoal mb-2">
-                    {activeSpotModal.title}
-                  </h3>
-
-                  <p className="text-xs md:text-sm text-stone font-light leading-relaxed mb-6">
-                    {activeSpotModal.description}
-                  </p>
-
-                  <div className="bg-bone p-4 rounded-2xl border border-latte space-y-2 mb-6">
-                    <p className="text-[11px] font-medium text-stone uppercase tracking-wider mb-2">
-                      Fasilitas & Karakteristik Spot:
-                    </p>
-                    <div className="grid grid-cols-1 gap-2">
-                      {activeSpotModal.features.map((feat, i) => (
-                        <div key={i} className="flex items-center gap-2 text-xs text-charcoal/90">
-                          <Check className="w-4 h-4 text-sage shrink-0" />
-                          <span>{feat}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2 text-xs text-stone bg-white p-3 rounded-xl border border-latte mb-6">
-                    <Users className="w-4 h-4 text-sage shrink-0" />
-                    <span>Kapasitas Area: <strong>{activeSpotModal.capacity}</strong></span>
-                  </div>
-                </div>
-
-                <div className="pt-4 border-t border-latte/60 flex flex-col sm:flex-row gap-3">
-                  <button
-                    onClick={() => {
-                      setActiveSpotModal(null);
-                      scrollToSection("menu-section");
-                    }}
-                    className="flex-1 bg-sage hover:bg-sage/90 text-white py-3 rounded-2xl text-xs sm:text-sm font-medium transition-all shadow-md text-center"
-                  >
-                    Pesan & Pesan Meja
-                  </button>
-                  <button
-                    onClick={() => setActiveSpotModal(null)}
-                    className="bg-bone hover:bg-latte text-charcoal px-5 py-3 rounded-2xl text-xs sm:text-sm font-medium transition-colors border border-latte text-center"
-                  >
-                    Tutup
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* WhatsApp Floating Button */}
       <motion.a
