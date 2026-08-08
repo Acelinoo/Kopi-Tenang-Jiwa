@@ -1406,18 +1406,20 @@ export default function Template3() {
         )}
       </AnimatePresence>
 
-      {/* Toast Notification (Top Center Dropdown) */}
+      {/* Toast Notification (Centered Directly Above Bottom Cart Bar) */}
       <AnimatePresence>
         {toast.show && (
           <motion.div
-            initial={{ opacity: 0, y: -30, scale: 0.9 }}
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.9 }}
+            exit={{ opacity: 0, y: 10, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 25 }}
-            className="fixed top-24 left-1/2 -translate-x-1/2 z-[200] bg-charcoal/95 backdrop-blur-md text-bone px-5 py-2.5 rounded-full shadow-2xl border border-latte/20 text-xs sm:text-sm flex items-center gap-2 max-w-[90vw]"
+            className="fixed bottom-20 sm:bottom-24 left-0 right-0 z-50 px-4 flex justify-center pointer-events-none"
           >
-            <Check className="w-4 h-4 text-sage shrink-0" />
-            <span className="truncate">{toast.message}</span>
+            <div className="pointer-events-auto bg-charcoal/95 backdrop-blur-md text-bone px-5 py-2.5 rounded-full shadow-2xl border border-latte/20 text-xs sm:text-sm flex items-center gap-2 max-w-md w-auto text-center justify-center">
+              <Check className="w-4 h-4 text-sage shrink-0" />
+              <span className="truncate">{toast.message}</span>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
