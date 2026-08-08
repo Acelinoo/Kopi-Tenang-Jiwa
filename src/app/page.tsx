@@ -553,7 +553,11 @@ export default function Template3() {
           </div>
           <div className="flex flex-wrap justify-center gap-3">
             {moodsList.map(mood => (
-              <motion.button key={mood} whileTap={{ scale: 0.95 }} onClick={() => setSelectedMood(selectedMood === mood ? null : mood)}
+              <motion.button key={mood} whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                  setSelectedMood(selectedMood === mood ? null : mood);
+                  scrollToMenu();
+                }}
                 className={`px-5 py-2.5 rounded-full text-sm transition-all duration-300 ${selectedMood === mood ? "bg-sage text-white shadow-soft-glow" : "bg-white border border-latte text-charcoal hover:bg-bone"
                   }`}
               >{mood}</motion.button>
@@ -669,12 +673,12 @@ export default function Template3() {
                       {(item.caffeineLevel || item.sweetnessLevel) && (
                         <div className="mb-3 flex items-center gap-2 flex-wrap text-[11px]">
                           {item.caffeineLevel && (
-                            <span className="bg-amber-50 text-amber-800 border border-amber-200/60 px-2.5 py-0.5 rounded-full font-medium flex items-center gap-1">
+                            <span className="bg-latte/60 text-charcoal border border-latte px-2.5 py-0.5 rounded-full font-medium flex items-center gap-1">
                               ⚡ {item.caffeineLevel}
                             </span>
                           )}
                           {item.sweetnessLevel && (
-                            <span className="bg-emerald-50 text-emerald-800 border border-emerald-200/60 px-2.5 py-0.5 rounded-full font-medium flex items-center gap-1">
+                            <span className="bg-sage/15 text-charcoal border border-sage/30 px-2.5 py-0.5 rounded-full font-medium flex items-center gap-1">
                               🍯 {item.sweetnessLevel}
                             </span>
                           )}
@@ -740,9 +744,9 @@ export default function Template3() {
                 >
                   <div>
                     <div className="flex items-center justify-between mb-4">
-                      <div className="flex gap-1 text-amber-400">
+                      <div className="flex gap-1 text-sage">
                         {[...Array(testi.rating)].map((_, r) => (
-                          <Star key={r} className="w-4 h-4 fill-amber-400" />
+                          <Star key={r} className="w-4 h-4 fill-sage text-sage" />
                         ))}
                       </div>
                       <span className="text-[10px] text-stone bg-bone px-2.5 py-1 rounded-full border border-latte">{testi.date}</span>
@@ -769,32 +773,32 @@ export default function Template3() {
       <AnimatePresence>
         {cartItemCount > 0 && !isCartOpen && (
           <motion.div
-            initial={{ y: 80, opacity: 0, scale: 0.95 }}
-            animate={{ y: 0, opacity: 1, scale: 1 }}
-            exit={{ y: 80, opacity: 0, scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 400, damping: 30 }}
-            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[92%] max-w-md"
+            initial={{ y: 80, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 80, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 350, damping: 25 }}
+            className="fixed bottom-4 sm:bottom-6 left-0 right-0 z-40 px-4 flex justify-center pointer-events-none"
           >
-            <div className="bg-charcoal/95 backdrop-blur-xl text-bone p-3.5 pl-5 rounded-full shadow-2xl border border-white/10 flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <div className="relative bg-sage text-white p-2.5 rounded-full flex items-center justify-center shadow-sm">
-                  <ShoppingBag className="w-5 h-5" />
-                  <span className="absolute -top-1 -right-1 bg-amber-400 text-charcoal font-bold text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
+            <div className="pointer-events-auto bg-charcoal/95 backdrop-blur-md text-bone px-4 sm:px-6 py-3 rounded-2xl sm:rounded-full shadow-2xl border border-latte/20 flex items-center justify-between gap-3 sm:gap-6 max-w-lg w-full">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="relative bg-sage text-white p-2.5 rounded-full flex items-center justify-center shrink-0">
+                  <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5" />
+                  <span className="absolute -top-1 -right-1 bg-bone text-charcoal font-bold text-[10px] w-4 h-4 rounded-full flex items-center justify-center border border-latte">
                     {cartItemCount}
                   </span>
                 </div>
-                <div>
-                  <p className="text-xs text-bone/60 leading-none">Total Pesanan ({cartItemCount} item)</p>
-                  <p className="text-base font-semibold text-bone mt-0.5">{formatRupiah(total)}</p>
+                <div className="min-w-0">
+                  <p className="text-[11px] sm:text-xs text-stone leading-tight truncate">{cartItemCount} Item di Keranjang</p>
+                  <p className="text-sm sm:text-base font-medium text-bone leading-tight mt-0.5">{formatRupiah(total)}</p>
                 </div>
               </div>
 
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="bg-sage hover:bg-sage/90 text-white text-xs md:text-sm font-medium px-5 py-2.5 rounded-full flex items-center gap-1.5 transition-all shadow-md active:scale-95 whitespace-nowrap"
+                className="bg-sage hover:bg-sage/90 text-white text-xs sm:text-sm font-medium px-4 sm:px-5 py-2.5 rounded-xl sm:rounded-full flex items-center gap-1.5 transition-all shadow-sm active:scale-95 shrink-0"
               >
                 <span>Lihat Pesanan</span>
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </button>
             </div>
           </motion.div>
