@@ -192,13 +192,13 @@ export default function Template3() {
     }
   };
 
-  // Auto scroll to menu section after 2 seconds of inactivity after typing in search bar
+  // Auto scroll to menu section after 1.5 seconds of inactivity after typing in search bar
   useEffect(() => {
     if (search.trim().length === 0) return;
 
     const timer = setTimeout(() => {
       scrollToMenu();
-    }, 2000);
+    }, 1500);
 
     return () => clearTimeout(timer);
   }, [search, scrollToMenu]);
