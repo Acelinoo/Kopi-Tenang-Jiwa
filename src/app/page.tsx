@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   ShoppingBag, Search, X, Plus, Minus,
   Coffee, MessageSquare, Phone,
-  Copy, Check, ChevronRight, ChevronDown, Menu as MenuIcon,
+  Copy, Check, ChevronRight, ChevronLeft, ChevronDown, Menu as MenuIcon,
   Package, MapPin, Ticket, Leaf, Clock, Gift,
   Instagram, Star, Heart, Send, Sparkles,
   Maximize2, Eye, Compass, ShieldCheck, Wifi, Zap, Users, Award, Smile
@@ -515,6 +515,59 @@ const CAFE_SPOTS: CafeSpot[] = [
 
 const SPOT_CATEGORIES = ["Semua Spot", "Indoor Lounge", "Outdoor Garden", "Working Nook", "Barista Corner", "Rooftop Terrace"];
 
+const CIRCULAR_GALLERY_ITEMS: CafeSpot[] = [
+  {
+    id: "spot-1",
+    title: "Warm Wood Lounge",
+    category: "Indoor Lounge",
+    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=1000",
+    description: "Sudut ruang santai indoor ber-AC dengan sentuhan sofa kayu hangat khas Kopi Tenang Jiwa.",
+    ambiance: "Hangat, Calm & Cozy",
+    capacity: "2 - 6 Orang",
+    features: ["Ruang Full AC", "Stopkontak Setiap Kursi", "Bebas Asap Rokok", "Sofa Cushion Premium"]
+  },
+  {
+    id: "spot-2",
+    title: "Outdoor Garden Patio",
+    category: "Outdoor Garden",
+    image: "https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&q=80&w=1000",
+    description: "Taman terbuka hijau berangin sejuk dengan tanaman tropis & ambient fairy lights cantik di malam hari.",
+    ambiance: "Sejuk, Asri & Aesthetic",
+    capacity: "4 - 8 Orang",
+    features: ["Smoking Area Friendly", "Rindang Tanaman Hijau", "Lampu Fairy Light Romantis", "Pet-Friendly Outer Zone"]
+  },
+  {
+    id: "spot-3",
+    title: "Focused Nugas Corner",
+    category: "Working Nook",
+    image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=1000",
+    description: "Sudut tenang untuk kerja (WFH) dan nugas, dilengkapi meja kayu ergonomis & koneksi WiFi 100Mbps.",
+    ambiance: "Hening, Fokus & Produktif",
+    capacity: "1 - 2 Orang",
+    features: ["Stopkontak Ganda tiap Kursi", "WiFi High Speed 100Mbps", "Lampu Baca Individual", "Quiet Zone Non-Bisa Bising"]
+  },
+  {
+    id: "spot-4",
+    title: "Artisan Barista Counter",
+    category: "Barista Corner",
+    image: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&q=80&w=1000",
+    description: "Area slow bar langsung di mana pengunjung dapat menikmati aroma kopi segar & menyaksikan penyeduhan espresso murni.",
+    ambiance: "Aroma Espresso & Interactive Bar",
+    capacity: "Direct Bar Seating",
+    features: ["Manual Brew Showcase", "Diskusi Varian Biji Kopi", "Aroma Kopi Menyegarkan", "Interaktif Bareng Barista"]
+  },
+  {
+    id: "spot-5",
+    title: "Rooftop Senja Terrace",
+    category: "Rooftop Terrace",
+    image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&q=80&w=1000",
+    description: "Spot lantai atas terbuka untuk menikmati panorama langit sore Kota Bandung dengan tiupan angin alami.",
+    ambiance: "Chill, Chill Vibe & Sunset View",
+    capacity: "2 - 4 Orang",
+    features: ["View Sunset & Sky Deck", "Open-Air Natural Breeze", "Musik Akustik Santai", "Spot Foto Instagramable"]
+  }
+];
+
 // ─── Constants ───────────────────────────────────────────────────────────
 const categories = [
   { key: "All", label: "Semua", icon: "✨" },
@@ -581,6 +634,7 @@ export default function Template3() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [selectedSpotCategory, setSelectedSpotCategory] = useState("Semua Spot");
   const [activeSpotModal, setActiveSpotModal] = useState<CafeSpot | null>(null);
+  const [activeCircularIndex, setActiveCircularIndex] = useState(0);
 
   const menuSectionRef = useRef<HTMLDivElement>(null);
 
@@ -1143,68 +1197,129 @@ export default function Template3() {
               </p>
             </div>
 
-            {/* Grid Story & Visual Banner */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-12">
-              <div className="lg:col-span-7 space-y-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="p-5 rounded-2xl bg-bone/70 border border-latte hover:border-sage/40 transition-all duration-300">
-                    <div className="w-10 h-10 rounded-xl bg-sage/10 text-sage flex items-center justify-center mb-3">
-                      <Coffee className="w-5 h-5" />
-                    </div>
-                    <h4 className="font-serif text-base text-charcoal font-semibold mb-1">Biji Kopi Nusantara</h4>
-                    <p className="text-xs text-stone font-light leading-relaxed">
-                      Dipetik dari petani lokal pilihan dengan sangrai murni untuk cita rasa yang clean, harum, dan otentik.
-                    </p>
-                  </div>
+            {/* 3D Circular Curved Gallery Component (5 Aesthetic Cafe Spots) */}
+            <div className="relative py-4 mb-12">
+              {/* Perspective Carousel Container */}
+              <div 
+                className="relative h-[420px] sm:h-[480px] md:h-[520px] w-full flex items-center justify-center overflow-hidden" 
+                style={{ perspective: "1200px" }}
+              >
+                <div className="relative w-full max-w-4xl h-full flex items-center justify-center">
+                  {CIRCULAR_GALLERY_ITEMS.map((spot, i) => {
+                    let diff = i - activeCircularIndex;
+                    // Circular wrap diff to range [-2, 2]
+                    if (diff > 2) diff -= 5;
+                    if (diff < -2) diff += 5;
 
-                  <div className="p-5 rounded-2xl bg-bone/70 border border-latte hover:border-sage/40 transition-all duration-300">
-                    <div className="w-10 h-10 rounded-xl bg-sage/10 text-sage flex items-center justify-center mb-3">
-                      <Heart className="w-5 h-5" />
-                    </div>
-                    <h4 className="font-serif text-base text-charcoal font-semibold mb-1">Suasana Homey & Calm</h4>
-                    <p className="text-xs text-stone font-light leading-relaxed">
-                      Sentuhan ornamen kayu hangat, pencahayaan lembut, dan musik acoustic yang bikin betah berlama-lama.
-                    </p>
-                  </div>
+                    const isActive = diff === 0;
 
-                  <div className="p-5 rounded-2xl bg-bone/70 border border-latte hover:border-sage/40 transition-all duration-300">
-                    <div className="w-10 h-10 rounded-xl bg-sage/10 text-sage flex items-center justify-center mb-3">
-                      <Wifi className="w-5 h-5" />
-                    </div>
-                    <h4 className="font-serif text-base text-charcoal font-semibold mb-1">Work-Friendly Facilities</h4>
-                    <p className="text-xs text-stone font-light leading-relaxed">
-                      Akses WiFi High-Speed 100Mbps dan stopkontak melimpah di setiap sudut untuk mendukung WFH & nugasmu.
-                    </p>
-                  </div>
+                    // Calculate 3D curved transform parameters
+                    const rotateY = diff * -25;
+                    const translateX = diff * 70;
+                    const scale = isActive ? 1.05 : Math.max(0.72, 1 - Math.abs(diff) * 0.18);
+                    const opacity = isActive ? 1 : Math.max(0.4, 1 - Math.abs(diff) * 0.35);
+                    const zIndex = 35 - Math.abs(diff) * 10;
+                    const translateZ = isActive ? 20 : -Math.abs(diff) * 100;
 
-                  <div className="p-5 rounded-2xl bg-bone/70 border border-latte hover:border-sage/40 transition-all duration-300">
-                    <div className="w-10 h-10 rounded-xl bg-sage/10 text-sage flex items-center justify-center mb-3">
-                      <Compass className="w-5 h-5" />
-                    </div>
-                    <h4 className="font-serif text-base text-charcoal font-semibold mb-1">Dual Zone Area</h4>
-                    <p className="text-xs text-stone font-light leading-relaxed">
-                      Nikmati area Indoor AC berpendingin nyaman maupun Outdoor Garden sejuk bertanaman rindang.
-                    </p>
-                  </div>
+                    return (
+                      <motion.div
+                        key={spot.id}
+                        animate={{
+                          rotateY: rotateY,
+                          x: `${translateX}%`,
+                          scale: scale,
+                          z: translateZ,
+                          opacity: opacity,
+                        }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 260,
+                          damping: 26,
+                        }}
+                        style={{
+                          zIndex: zIndex,
+                          transformStyle: "preserve-3d",
+                        }}
+                        onClick={() => setActiveCircularIndex(i)}
+                        className={`absolute w-[280px] sm:w-[360px] md:w-[440px] h-[340px] sm:h-[400px] md:h-[440px] rounded-3xl overflow-hidden cursor-pointer shadow-2xl border ${
+                          isActive ? "border-sage/50 ring-4 ring-sage/20" : "border-latte/60"
+                        } transition-shadow duration-300 group select-none bg-charcoal`}
+                      >
+                        <img
+                          src={spot.image}
+                          alt={spot.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 pointer-events-none"
+                        />
+
+                        {/* Dark Gradient Overlay for Typography */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/95 via-charcoal/40 to-transparent flex flex-col justify-end p-6 sm:p-8 text-white pointer-events-none">
+                          <div className="flex items-center gap-2 mb-2 flex-wrap">
+                            <span className="bg-sage text-white text-[10px] sm:text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
+                              📍 {spot.category}
+                            </span>
+                            <span className="bg-white/20 backdrop-blur-md text-white text-[10px] sm:text-xs px-2.5 py-1 rounded-full">
+                              ✨ {spot.ambiance}
+                            </span>
+                          </div>
+
+                          <h4 className="font-serif text-xl sm:text-2xl font-bold leading-tight mb-1 text-white group-hover:text-sage transition-colors">
+                            {spot.title}
+                          </h4>
+                          <p className="text-xs sm:text-sm text-bone/80 font-light line-clamp-2 mb-4">
+                            {spot.description}
+                          </p>
+
+                          {/* Quick Action Preview Button on Active Slide */}
+                          {isActive && (
+                            <motion.button
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setActiveSpotModal(spot);
+                              }}
+                              className="pointer-events-auto bg-white/90 hover:bg-white text-charcoal hover:text-sage text-xs font-semibold px-4 py-2.5 rounded-xl transition-all shadow-md flex items-center justify-between w-full mt-1"
+                            >
+                              <span>Lihat Detail Spot ini</span>
+                              <Maximize2 className="w-4 h-4" />
+                            </motion.button>
+                          )}
+                        </div>
+                      </motion.div>
+                    );
+                  })}
                 </div>
+
+                {/* Left & Right Circular Gallery Arrow Navigation Buttons */}
+                <button
+                  onClick={() => setActiveCircularIndex((prev) => (prev - 1 + 5) % 5)}
+                  className="absolute left-2 md:left-6 z-40 p-3.5 rounded-full bg-white/90 backdrop-blur-md border border-latte text-charcoal hover:bg-sage hover:text-white shadow-xl transition-all duration-300 active:scale-95"
+                  aria-label="Sebelumnya"
+                >
+                  <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
+                </button>
+
+                <button
+                  onClick={() => setActiveCircularIndex((prev) => (prev + 1) % 5)}
+                  className="absolute right-2 md:right-6 z-40 p-3.5 rounded-full bg-white/90 backdrop-blur-md border border-latte text-charcoal hover:bg-sage hover:text-white shadow-xl transition-all duration-300 active:scale-95"
+                  aria-label="Berikutnya"
+                >
+                  <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
+                </button>
               </div>
 
-              {/* Cafe Ambiance Image Showcase */}
-              <div className="lg:col-span-5 relative">
-                <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-latte group h-[340px]">
-                  <img 
-                    src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=800" 
-                    alt="Interior Kopi Tenang Jiwa" 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+              {/* Indicator Dots */}
+              <div className="flex justify-center items-center gap-2 mt-4">
+                {CIRCULAR_GALLERY_ITEMS.map((item, idx) => (
+                  <button
+                    key={item.id}
+                    onClick={() => setActiveCircularIndex(idx)}
+                    className={`h-2.5 rounded-full transition-all duration-300 ${
+                      activeCircularIndex === idx ? "w-8 bg-sage" : "w-2.5 bg-latte hover:bg-stone/50"
+                    }`}
+                    aria-label={`Slide ${idx + 1}`}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-transparent to-transparent flex flex-col justify-end p-6 text-white">
-                    <span className="text-[11px] font-medium text-sage bg-white/90 backdrop-blur-md px-3 py-1 rounded-full w-max mb-2">
-                      📍 Jl. Ketenangan No. 8, Bandung
-                    </span>
-                    <h4 className="font-serif text-xl font-medium">Sudut Tenang Jiwa Utama</h4>
-                    <p className="text-xs text-bone/80 font-light">Tempat terbaik untuk melepas penat dan mencari inspirasi baru.</p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
 
