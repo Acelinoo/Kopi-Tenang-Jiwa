@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: theme('colors.bone');
+    color: theme('colors.charcoal');
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+}
+
+/* ─── Elegant Utilities ─── */
+.glass-panel {
+  background: rgba(253, 251, 247, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(230, 223, 211, 0.5);
+}
+
+.btn-primary {
+  @apply bg-sage text-bone px-6 py-3 rounded-2xl font-medium transition-all duration-300;
+}
+.btn-primary:hover {
+  @apply bg-charcoal shadow-soft-glow -translate-y-0.5;
+}
+.btn-primary:active {
+  @apply translate-y-0 shadow-none;
+}
+
+.btn-outline {
+  @apply border border-latte text-charcoal px-6 py-3 rounded-2xl font-medium transition-all duration-300;
+}
+.btn-outline:hover {
+  @apply border-sage text-sage bg-sage/5;
+}
+
+.input-elegant {
+  @apply bg-white border border-latte rounded-2xl px-4 py-3 focus:outline-none focus:border-sage focus:ring-4 focus:ring-sage/10 transition-all duration-300 placeholder:text-stone/60;
+}
+
+/* ─── Soft Animations ─── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* ─── Scrollbar ─── */
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: theme('colors.latte'); border-radius: 4px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: theme('colors.stone'); }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ─── WhatsApp Floating Button Pulse ─── */
+@keyframes wa-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(37, 211, 102, 0); }
+}
+.wa-float-pulse {
+  animation: wa-pulse 2s ease-in-out infinite;
+}
+
+/* ─── Smooth Focus States ─── */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ─── Footer Link Underline ─── */
+.footer-link {
+  position: relative;
+  display: inline-block;
+}
+.footer-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: theme('colors.sage');
+  transition: width 0.3s ease;
+}
+.footer-link:hover::after {
+  width: 100%;
+}
