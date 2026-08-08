@@ -388,7 +388,7 @@ const SPECIAL_PACKAGES: PackageItem[] = [
     price: 120000,
     originalPrice: 144000,
     badge: "👥 Hemat Ber-4",
-    image: "https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&q=80&w=600",
+    image: "/images/paket_nongkrong_ber4.png",
     description: "Paket mabar & kumpul seru bareng sahabat. Dapat 4 minuman favorit + snack basket komplit.",
     itemsIncluded: [
       "4x Minuman Kopi / Non-Kopi Pilihan",
