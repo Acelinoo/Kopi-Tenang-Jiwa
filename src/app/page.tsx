@@ -780,8 +780,8 @@ export default function Template3() {
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-sage/5 blur-[100px] pointer-events-none" />
       <div className="absolute bottom-[20%] right-[-10%] w-[30%] h-[30%] rounded-full bg-latte/40 blur-[100px] pointer-events-none" />
 
-      {/* Header */}
-      <header className="sticky top-0 z-40 glass-panel border-b border-latte/40 shadow-sm transition-all duration-300">
+      {/* Header (Fixed Navbar) */}
+      <header className="fixed top-0 inset-x-0 z-50 glass-panel border-b border-latte/40 shadow-sm transition-all duration-300">
         <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
           
           {/* Logo & Brand */}
@@ -1023,7 +1023,7 @@ export default function Template3() {
         </AnimatePresence>
       </header>
 
-      <main className="max-w-6xl mx-auto px-6 pt-12 pb-24 relative z-10">
+      <main className="max-w-6xl mx-auto px-6 pt-28 pb-24 relative z-10">
 
         {/* Hero */}
         <div id="hero" className="scroll-mt-28">
