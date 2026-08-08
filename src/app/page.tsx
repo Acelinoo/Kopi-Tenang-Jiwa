@@ -43,6 +43,9 @@ const REAL_MENU: MenuItem[] = [
     isAvailable: true,
     customVariants: ["Dingin", "Hangat"],
     moods: ["Ngantuk Berat", "Butuh Nyantai"],
+    badge: "🔥 Best Seller",
+    caffeineLevel: "Medium Caffeine",
+    sweetnessLevel: "Aren Organik",
   },
   {
     id: 2,
@@ -54,6 +57,9 @@ const REAL_MENU: MenuItem[] = [
     isAvailable: true,
     customVariants: ["Less Sugar", "Normal Sweet"],
     moods: ["Lagi Badmood", "Butuh Nyantai"],
+    badge: "⭐ Barista's Pick",
+    caffeineLevel: "Low Caffeine",
+    sweetnessLevel: "Creamy Matcha",
   },
   {
     id: 3,
@@ -64,6 +70,8 @@ const REAL_MENU: MenuItem[] = [
     category: "cemilan",
     isAvailable: true,
     moods: ["Laper Dikit"],
+    badge: "🔥 Best Seller",
+    sweetnessLevel: "Gurih Mentega",
   },
   {
     id: 4,
@@ -74,6 +82,7 @@ const REAL_MENU: MenuItem[] = [
     category: "cemilan",
     isAvailable: true,
     moods: ["Lagi Badmood", "Laper Dikit"],
+    sweetnessLevel: "Manis Maple",
   },
   {
     id: 5,
@@ -85,6 +94,9 @@ const REAL_MENU: MenuItem[] = [
     isAvailable: true,
     customVariants: ["Dingin", "Hangat"],
     moods: ["Ngantuk Berat"],
+    badge: "⭐ Barista's Pick",
+    caffeineLevel: "Strong Caffeine",
+    sweetnessLevel: "Tanpa Gula",
   },
   {
     id: 6,
@@ -96,6 +108,8 @@ const REAL_MENU: MenuItem[] = [
     isAvailable: true,
     customVariants: ["Less Sugar", "Normal Sweet"],
     moods: ["Lagi Badmood", "Butuh Nyantai"],
+    caffeineLevel: "Non-Kafein",
+    sweetnessLevel: "Velvety Sweet",
   },
   {
     id: 7,
@@ -107,6 +121,9 @@ const REAL_MENU: MenuItem[] = [
     isAvailable: true,
     customVariants: ["Dingin", "Hangat"],
     moods: ["Butuh Nyantai", "Lagi Badmood"],
+    badge: "🔥 Best Seller",
+    caffeineLevel: "Medium Caffeine",
+    sweetnessLevel: "Caramel Sweet",
   },
   {
     id: 8,
@@ -117,6 +134,56 @@ const REAL_MENU: MenuItem[] = [
     category: "cemilan",
     isAvailable: true,
     moods: ["Laper Dikit", "Lagi Badmood"],
+    sweetnessLevel: "Cokelat Pisang",
+  },
+];
+
+// ─── Testimonials Data (Social Proof) ────────────────────────────────────
+const TESTIMONIALS = [
+  {
+    id: 1,
+    name: "Rizky Ramadhan",
+    role: "Pecinta Kopi Aren",
+    rating: 5,
+    text: "Kopi Susu Tenang Jiwa rahasianya ga pernah gagal. Aren organik-nya pas banget, gak terlalu manis & gak bikin enek!",
+    date: "2 hari lalu",
+    avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150",
+  },
+  {
+    id: 2,
+    name: "Annisa Larasati",
+    role: "Mahasiswi Bandung",
+    rating: 5,
+    text: "Suasananya tenang banget buat nugas. Matcha Cream Latte-nya super creamy dan pas di lidah. Langganan!",
+    date: "3 hari lalu",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150",
+  },
+  {
+    id: 3,
+    name: "Deni Prasetyo",
+    role: "Software Engineer",
+    rating: 5,
+    text: "Croissant renyah berlapis-lapis dipadukan sama Americano panas, perpaduan moodbooster kerja paling ampuh.",
+    date: "1 minggu lalu",
+    avatar: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&q=80&w=150",
+  },
+  {
+    id: 4,
+    name: "Siti Nurhaliza",
+    role: "Food Content Creator",
+    rating: 5,
+    text: "Pengiriman cepat dan packaging-nya rapi banget! Tetap dingin waktu sampai di rumah. Paket Santai-nya hemat parah!",
+    date: "1 minggu lalu",
+    avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=150",
+  },
+  {
+    id: 5,
+    name: "Bagus Setiawan",
+    role: "Arsitek",
+    rating: 5,
+    text: "Rasa kopinya clean dan wangi. Butter Croissant-nya renyah banget. Tempat ngopi & pesan favorit setiap minggu di Bandung.",
+    date: "2 minggu lalu",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150",
   },
 ];
 
@@ -585,12 +652,34 @@ export default function Template3() {
                     className="bg-white rounded-3xl overflow-hidden border border-latte shadow-elegant group flex flex-col"
                   >
                     <div className="h-56 overflow-hidden relative">
+                      {item.badge && (
+                        <div className="absolute top-4 left-4 z-10">
+                          <span className="bg-sage/90 backdrop-blur-md text-white text-[11px] font-medium px-3.5 py-1 rounded-full shadow-sm flex items-center gap-1.5 border border-white/20">
+                            {item.badge}
+                          </span>
+                        </div>
+                      )}
                       <img src={item.image} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt={item.name} />
                       {!isAvail && <div className="absolute inset-0 bg-white/70 backdrop-blur-sm flex items-center justify-center"><span className="bg-charcoal text-white px-4 py-1.5 rounded-full text-xs font-medium">Habis</span></div>}
                     </div>
                     <div className="p-6 flex flex-col flex-1">
                       <h4 className="font-serif text-lg text-charcoal mb-2 group-hover:text-sage transition-colors">{item.name}</h4>
-                      <p className="text-sm text-stone mb-4 font-light leading-relaxed line-clamp-2">{item.description}</p>
+                      <p className="text-sm text-stone mb-3 font-light leading-relaxed line-clamp-2">{item.description}</p>
+
+                      {(item.caffeineLevel || item.sweetnessLevel) && (
+                        <div className="mb-3 flex items-center gap-2 flex-wrap text-[11px]">
+                          {item.caffeineLevel && (
+                            <span className="bg-amber-50 text-amber-800 border border-amber-200/60 px-2.5 py-0.5 rounded-full font-medium flex items-center gap-1">
+                              ⚡ {item.caffeineLevel}
+                            </span>
+                          )}
+                          {item.sweetnessLevel && (
+                            <span className="bg-emerald-50 text-emerald-800 border border-emerald-200/60 px-2.5 py-0.5 rounded-full font-medium flex items-center gap-1">
+                              🍯 {item.sweetnessLevel}
+                            </span>
+                          )}
+                        </div>
+                      )}
 
                       {variantOptions.length > 0 && isAvail && (
                         <div className="mb-4 flex gap-2 flex-wrap">
@@ -615,8 +704,102 @@ export default function Template3() {
             </AnimatePresence>
           </motion.div>
         )}
-      </section>
+        </section>
+
+        {/* Testimonials Section (Social Proof Marquee) */}
+        <motion.section
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mt-24 overflow-hidden"
+        >
+          <div className="text-center mb-10 px-6">
+            <div className="inline-flex items-center gap-2 bg-sage/10 px-4 py-1.5 rounded-full text-xs text-sage font-medium mb-3 border border-sage/20">
+              <Star className="w-3.5 h-3.5 fill-sage text-sage" />
+              <span>Ulasan Sahabat Tenang Jiwa</span>
+            </div>
+            <h3 className="font-serif text-3xl md:text-4xl text-charcoal mb-3">Apa Kata Mereka?</h3>
+            <p className="text-stone text-sm max-w-md mx-auto">
+              ⭐ <strong>4.9 / 5.0</strong> dari 500+ pecinta kopi & pastry di Bandung.
+            </p>
+          </div>
+
+          {/* Marquee Wrapper with fading side overlays */}
+          <div className="relative w-full overflow-hidden py-4">
+            {/* Side gradient overlays */}
+            <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-bone to-transparent z-10" />
+            <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-bone to-transparent z-10" />
+
+            {/* Marquee Track */}
+            <div className="animate-marquee flex gap-6">
+              {[...TESTIMONIALS, ...TESTIMONIALS].map((testi, i) => (
+                <div
+                  key={`${testi.id}-${i}`}
+                  className="w-[300px] md:w-[360px] flex-shrink-0 bg-white rounded-3xl p-6 border border-latte shadow-elegant flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex gap-1 text-amber-400">
+                        {[...Array(testi.rating)].map((_, r) => (
+                          <Star key={r} className="w-4 h-4 fill-amber-400" />
+                        ))}
+                      </div>
+                      <span className="text-[10px] text-stone bg-bone px-2.5 py-1 rounded-full border border-latte">{testi.date}</span>
+                    </div>
+                    <p className="text-sm text-charcoal/80 font-light italic leading-relaxed mb-6">
+                      &ldquo;{testi.text}&rdquo;
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-3 pt-4 border-t border-latte/50">
+                    <img src={testi.avatar} alt={testi.name} className="w-10 h-10 rounded-full object-cover border border-latte" />
+                    <div>
+                      <h5 className="font-serif text-sm font-medium text-charcoal">{testi.name}</h5>
+                      <p className="text-[11px] text-stone">{testi.role}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.section>
       </main>
+
+      {/* Floating Bottom Cart Bar */}
+      <AnimatePresence>
+        {cartItemCount > 0 && !isCartOpen && (
+          <motion.div
+            initial={{ y: 80, opacity: 0, scale: 0.95 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            exit={{ y: 80, opacity: 0, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[92%] max-w-md"
+          >
+            <div className="bg-charcoal/95 backdrop-blur-xl text-bone p-3.5 pl-5 rounded-full shadow-2xl border border-white/10 flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="relative bg-sage text-white p-2.5 rounded-full flex items-center justify-center shadow-sm">
+                  <ShoppingBag className="w-5 h-5" />
+                  <span className="absolute -top-1 -right-1 bg-amber-400 text-charcoal font-bold text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
+                    {cartItemCount}
+                  </span>
+                </div>
+                <div>
+                  <p className="text-xs text-bone/60 leading-none">Total Pesanan ({cartItemCount} item)</p>
+                  <p className="text-base font-semibold text-bone mt-0.5">{formatRupiah(total)}</p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setIsCartOpen(true)}
+                className="bg-sage hover:bg-sage/90 text-white text-xs md:text-sm font-medium px-5 py-2.5 rounded-full flex items-center gap-1.5 transition-all shadow-md active:scale-95 whitespace-nowrap"
+              >
+                <span>Lihat Pesanan</span>
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Footer */}
       <footer className="bg-charcoal text-bone/80 relative overflow-hidden">

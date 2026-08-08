@@ -9,6 +9,9 @@ export type MenuItem = {
   isAvailable: boolean | string;
   customVariants?: string[];
   moods?: string[];
+  badge?: string;
+  caffeineLevel?: string;
+  sweetnessLevel?: string;
 };
 
 export type CartItem = MenuItem & {
