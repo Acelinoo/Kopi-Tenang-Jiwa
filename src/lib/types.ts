@@ -25,3 +25,16 @@ export type VoucherConfig = {
   voucherCode: string;
   voucherDiscount: number;
 };
+
+export type PackageItem = {
+  id: string;
+  name: string;
+  tagline: string;
+  price: number;
+  originalPrice?: number;
+  badge?: string;
+  image: string;
+  itemsIncluded: string[];
+  customVariants?: string[];
+  description: string;
+};

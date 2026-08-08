@@ -9,7 +9,7 @@ import {
   Package, MapPin, Ticket, Leaf, Clock, Gift,
   Instagram, Star, Heart, Send
 } from "lucide-react";
-import { MenuItem, CartItem, VoucherConfig } from "@/lib/types";
+import { MenuItem, CartItem, VoucherConfig, PackageItem } from "@/lib/types";
 
 // ─── Brand & Config ─────────────────────────────────────────────────────
 const BRAND_NAME = "Kopi Tenang Jiwa";
@@ -32,7 +32,9 @@ const generateInvoiceCode = () => {
 };
 
 // ─── Real Menu Data ──────────────────────────────────────────────────────
+// ─── Real Menu Data (25 Items) ─────────────────────────────────────────
 const REAL_MENU: MenuItem[] = [
+  // ── Kopi ──
   {
     id: 1,
     name: "Kopi Susu Tenang Jiwa",
@@ -48,6 +50,72 @@ const REAL_MENU: MenuItem[] = [
     sweetnessLevel: "Aren Organik",
   },
   {
+    id: 5,
+    name: "Americano Klasik",
+    description: "Double shot espresso dengan air panas, memberikan rasa kopi murni yang kuat dan clean.",
+    price: 15000,
+    image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefda?auto=format&fit=crop&q=80&w=600",
+    category: "kopi",
+    isAvailable: true,
+    customVariants: ["Dingin", "Hangat"],
+    moods: ["Ngantuk Berat"],
+    badge: "⭐ Barista's Pick",
+    caffeineLevel: "Strong Caffeine",
+    sweetnessLevel: "Tanpa Gula",
+  },
+  {
+    id: 7,
+    name: "Caramel Macchiato",
+    description: "Espresso lembut bertemu susu creamy dan drizzle caramel manis yang menggoda.",
+    price: 24000,
+    image: "https://images.unsplash.com/photo-1485808191679-5f86510681a2?auto=format&fit=crop&q=80&w=600",
+    category: "kopi",
+    isAvailable: true,
+    customVariants: ["Dingin", "Hangat"],
+    moods: ["Butuh Nyantai", "Lagi Badmood"],
+    badge: "🔥 Best Seller",
+    caffeineLevel: "Medium Caffeine",
+    sweetnessLevel: "Caramel Sweet",
+  },
+  {
+    id: 15,
+    name: "Kopi Susu Pandan Wangi",
+    description: "Espresso khas berpadu ekstrak daun pandan asli yang harum dan legit.",
+    price: 20000,
+    image: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&q=80&w=600",
+    category: "kopi",
+    isAvailable: true,
+    customVariants: ["Dingin", "Hangat"],
+    moods: ["Butuh Nyantai"],
+    sweetnessLevel: "Aroma Pandan",
+  },
+  {
+    id: 16,
+    name: "Hazelnut Latte Creamy",
+    description: "Espresso dengan rasa kacang hazelnut yang gurih manis dan foam susu lembut.",
+    price: 23000,
+    image: "https://images.unsplash.com/photo-1572442388796-11668a67e53d?auto=format&fit=crop&q=80&w=600",
+    category: "kopi",
+    isAvailable: true,
+    customVariants: ["Dingin", "Hangat"],
+    moods: ["Butuh Nyantai"],
+    caffeineLevel: "Medium Caffeine",
+  },
+  {
+    id: 17,
+    name: "Spanish Latte Sweet Milk",
+    description: "Kopi espresso kuat dipadukan kental manis lezat dan susu segar harum.",
+    price: 22000,
+    image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&q=80&w=600",
+    category: "kopi",
+    isAvailable: true,
+    customVariants: ["Dingin", "Hangat"],
+    moods: ["Ngantuk Berat"],
+    caffeineLevel: "Strong Caffeine",
+  },
+
+  // ── Non-Kopi ──
+  {
     id: 2,
     name: "Matcha Cream Latte",
     description: "Pure Uji Matcha jepang berpadu dengan creamy milk foam lembut di atasnya.",
@@ -61,6 +129,142 @@ const REAL_MENU: MenuItem[] = [
     caffeineLevel: "Low Caffeine",
     sweetnessLevel: "Creamy Matcha",
   },
+  {
+    id: 6,
+    name: "Taro Velvet Latte",
+    description: "Perpaduan taro premium dengan susu segar dan hint vanilla yang lembut.",
+    price: 20000,
+    image: "https://images.unsplash.com/photo-1628088062854-d1870b4553da?auto=format&fit=crop&q=80&w=600",
+    category: "non-kopi",
+    isAvailable: true,
+    customVariants: ["Less Sugar", "Normal Sweet"],
+    moods: ["Lagi Badmood", "Butuh Nyantai"],
+    caffeineLevel: "Non-Kafein",
+    sweetnessLevel: "Velvety Sweet",
+  },
+  {
+    id: 18,
+    name: "Earl Grey Artisan Milk Tea",
+    description: "Teh Earl Grey dengan aroma bergamot dipadukan susu manis lembut.",
+    price: 21000,
+    image: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&q=80&w=600",
+    category: "non-kopi",
+    isAvailable: true,
+    customVariants: ["Less Sugar", "Normal Sweet"],
+    moods: ["Butuh Nyantai"],
+    caffeineLevel: "Low Caffeine",
+  },
+  {
+    id: 19,
+    name: "Red Velvet Choco Float",
+    description: "Minuman Red Velvet kaya rasa cokelat dengan scoop ice cream vanila manis.",
+    price: 22000,
+    image: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&q=80&w=600",
+    category: "non-kopi",
+    isAvailable: true,
+    moods: ["Lagi Badmood"],
+    caffeineLevel: "Non-Kafein",
+  },
+  {
+    id: 20,
+    name: "Mango Tropical Smoothie",
+    description: "Smoothie mangga manis menyegarkan dengan bulir buah asli & hint kelapa.",
+    price: 23000,
+    image: "https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&q=80&w=600",
+    category: "non-kopi",
+    isAvailable: true,
+    moods: ["Butuh Nyantai"],
+    caffeineLevel: "Non-Kafein",
+  },
+
+  // ── Makanan Berat ──
+  {
+    id: 9,
+    name: "Nasi Goreng Rempah Tenang Jiwa",
+    description: "Nasi goreng bumbu rempah spesial dengan topping telor ceplok, sosis, & kerupuk renyah.",
+    price: 28000,
+    image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&q=80&w=600",
+    category: "makanan-berat",
+    isAvailable: true,
+    moods: ["Laper Dikit"],
+    badge: "🔥 Best Seller",
+    sweetnessLevel: "Gurih Rempah",
+  },
+  {
+    id: 10,
+    name: "Rice Bowl Ayam Sambal Matah",
+    description: "Daging ayam crispy empuk dengan siraman sambal matah khas Bali yang pedas segar.",
+    price: 27000,
+    image: "https://images.unsplash.com/photo-1543339308-43e59d6b73a6?auto=format&fit=crop&q=80&w=600",
+    category: "makanan-berat",
+    isAvailable: true,
+    moods: ["Laper Dikit"],
+    badge: "⭐ Barista's Pick",
+    sweetnessLevel: "Pedas Segar",
+  },
+  {
+    id: 11,
+    name: "Beef Teriyaki Donburi",
+    description: "Irisan daging sapi saikoro empuk ditumis bumbu teriyaki manis gurih di atas nasi hangat.",
+    price: 32000,
+    image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&q=80&w=600",
+    category: "makanan-berat",
+    isAvailable: true,
+    badge: "🔥 Best Seller",
+    sweetnessLevel: "Manis Gurih",
+  },
+  {
+    id: 12,
+    name: "Spaghetti Carbonara Creamy",
+    description: "Pasta spaghetti lembut dalam saus keju creamy gurih dengan potongan smoked beef.",
+    price: 30000,
+    image: "https://images.unsplash.com/photo-1612874742237-6526221588e3?auto=format&fit=crop&q=80&w=600",
+    category: "makanan-berat",
+    isAvailable: true,
+    sweetnessLevel: "Creamy Cheese",
+  },
+  {
+    id: 13,
+    name: "Nasi Ayam Geprek Aren",
+    description: "Ayam geprek crispy pedas dengan saus caramel aren gurih manis yang melimpah.",
+    price: 25000,
+    image: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&q=80&w=600",
+    category: "makanan-berat",
+    isAvailable: true,
+    sweetnessLevel: "Pedas Manis",
+  },
+  {
+    id: 14,
+    name: "Dory Fish & Chips Crispy",
+    description: "Ikan dory goreng tepung renyah disajikan bersama kentang goreng & saus tartar segar.",
+    price: 29000,
+    image: "https://images.unsplash.com/photo-1520072959219-c595dc870360?auto=format&fit=crop&q=80&w=600",
+    category: "makanan-berat",
+    isAvailable: true,
+    sweetnessLevel: "Gurih Renyah",
+  },
+  {
+    id: 24,
+    name: "Chicken Katsu Curry Rice",
+    description: "Ayam katsu tebal berbalur bumbu kari Jepang gurih pekat disajikan di atas nasi pulen.",
+    price: 31000,
+    image: "https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&q=80&w=600",
+    category: "makanan-berat",
+    isAvailable: true,
+    badge: "⭐ Barista's Pick",
+  },
+  {
+    id: 25,
+    name: "Nasi Kebuli Daging Sapi Special",
+    description: "Nasi bumbu kebuli kaya rempah dengan irisan daging sapi empuk & kismis manis.",
+    price: 35000,
+    image: "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&q=80&w=600",
+    category: "makanan-berat",
+    isAvailable: true,
+    badge: "🔥 Best Seller",
+  },
+
+  // ── Pastry & Snack ──
   {
     id: 3,
     name: "Butter Croissant",
@@ -85,47 +289,6 @@ const REAL_MENU: MenuItem[] = [
     sweetnessLevel: "Manis Maple",
   },
   {
-    id: 5,
-    name: "Americano Klasik",
-    description: "Double shot espresso dengan air panas, memberikan rasa kopi murni yang kuat dan clean.",
-    price: 15000,
-    image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefda?auto=format&fit=crop&q=80&w=600",
-    category: "kopi",
-    isAvailable: true,
-    customVariants: ["Dingin", "Hangat"],
-    moods: ["Ngantuk Berat"],
-    badge: "⭐ Barista's Pick",
-    caffeineLevel: "Strong Caffeine",
-    sweetnessLevel: "Tanpa Gula",
-  },
-  {
-    id: 6,
-    name: "Taro Velvet Latte",
-    description: "Perpaduan taro premium dengan susu segar dan hint vanilla yang lembut.",
-    price: 20000,
-    image: "https://images.unsplash.com/photo-1628088062854-d1870b4553da?auto=format&fit=crop&q=80&w=600",
-    category: "non-kopi",
-    isAvailable: true,
-    customVariants: ["Less Sugar", "Normal Sweet"],
-    moods: ["Lagi Badmood", "Butuh Nyantai"],
-    caffeineLevel: "Non-Kafein",
-    sweetnessLevel: "Velvety Sweet",
-  },
-  {
-    id: 7,
-    name: "Caramel Macchiato",
-    description: "Espresso lembut bertemu susu creamy dan drizzle caramel manis yang menggoda.",
-    price: 24000,
-    image: "https://images.unsplash.com/photo-1485808191679-5f86510681a2?auto=format&fit=crop&q=80&w=600",
-    category: "kopi",
-    isAvailable: true,
-    customVariants: ["Dingin", "Hangat"],
-    moods: ["Butuh Nyantai", "Lagi Badmood"],
-    badge: "🔥 Best Seller",
-    caffeineLevel: "Medium Caffeine",
-    sweetnessLevel: "Caramel Sweet",
-  },
-  {
     id: 8,
     name: "Chocolate Banana Toast",
     description: "Roti panggang renyah dengan selai cokelat premium dan irisan pisang segar.",
@@ -136,54 +299,102 @@ const REAL_MENU: MenuItem[] = [
     moods: ["Laper Dikit", "Lagi Badmood"],
     sweetnessLevel: "Cokelat Pisang",
   },
+  {
+    id: 21,
+    name: "French Fries Truffle Oil",
+    description: "Kentang goreng renyah dengan taburan garam gurih & minyak truffle harum aromatik.",
+    price: 17000,
+    image: "https://images.unsplash.com/photo-1576107232684-1279f390859f?auto=format&fit=crop&q=80&w=600",
+    category: "cemilan",
+    isAvailable: true,
+    sweetnessLevel: "Aroma Truffle",
+  },
+  {
+    id: 22,
+    name: "Singkong Goreng Keju Aren",
+    description: "Singkong merekah empuk dengan cocolan saus gula aren dan parutan keju melimpah.",
+    price: 15000,
+    image: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&q=80&w=600",
+    category: "cemilan",
+    isAvailable: true,
+    sweetnessLevel: "Manis Gurih",
+  },
+  {
+    id: 23,
+    name: "Churros Cinnamon Sugar",
+    description: "Churros goreng renyah bersalut gula kayu manis disajikan dengan saus cokelat leleh.",
+    price: 18000,
+    image: "https://images.unsplash.com/photo-1624371414361-e670ef4889d6?auto=format&fit=crop&q=80&w=600",
+    category: "cemilan",
+    isAvailable: true,
+    sweetnessLevel: "Cinnamon Sweet",
+  },
 ];
 
-// ─── Testimonials Data (Social Proof) ────────────────────────────────────
-const TESTIMONIALS = [
+// ─── Special & Celebration Packages ────────────────────────────────────
+const SPECIAL_PACKAGES: PackageItem[] = [
   {
-    id: 1,
-    name: "Rizky Ramadhan",
-    role: "Pecinta Kopi Aren",
-    rating: 5,
-    text: "Kopi Susu Tenang Jiwa rahasianya ga pernah gagal. Aren organik-nya pas banget, gak terlalu manis & gak bikin enek!",
-    date: "2 hari lalu",
-    avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150",
+    id: "pkg-bday-1",
+    name: "Paket Birthday Perayaan",
+    tagline: "Khusus Dekorasi & Reserved Table",
+    price: 150000,
+    badge: "🎉 Birthday Special",
+    image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&q=80&w=600",
+    description: "Paket pesta perayaan ulang tahun simpel nan hangat di kedai Kopi Tenang Jiwa.",
+    itemsIncluded: [
+      "Dekorasi Meja Ulang Tahun Special",
+      "Custom Birthday Greeting Card",
+      "2x Minuman Bebas Pilih (Kopi / Non-Kopi)",
+      "Reserved Table Prioritas 2 Jam",
+    ],
   },
   {
-    id: 2,
-    name: "Annisa Larasati",
-    role: "Mahasiswi Bandung",
-    rating: 5,
-    text: "Suasananya tenang banget buat nugas. Matcha Cream Latte-nya super creamy dan pas di lidah. Langganan!",
-    date: "3 hari lalu",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150",
+    id: "pkg-bday-2",
+    name: "Paket Birthday Full Set (Cake + Kopi)",
+    tagline: "Lengkap Whole Cake + 4 Kopi + Dekor",
+    price: 350000,
+    badge: "🎂 Ultimate Birthday",
+    image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&q=80&w=600",
+    description: "Paket ulang tahun mewah lengkap dengan Whole Cake spesial, 4 Minuman, hampers & dekorasi manis.",
+    itemsIncluded: [
+      "1x Whole Birthday Cake (Tiramisu / Choco)",
+      "4x Minuman Kopi / Non-Kopi Bebas Pilih",
+      "Dekorasi Meja Full & Balon Perayaan",
+      "Hampers Box + Custom Greeting Card",
+      "Reserved Table Prioritas 3 Jam",
+    ],
+    customVariants: ["Cake Tiramisu Premium", "Cake Belgian Chocolate", "Cake Red Velvet Cream"],
   },
   {
-    id: 3,
-    name: "Deni Prasetyo",
-    role: "Software Engineer",
-    rating: 5,
-    text: "Croissant renyah berlapis-lapis dipadukan sama Americano panas, perpaduan moodbooster kerja paling ampuh.",
-    date: "1 minggu lalu",
-    avatar: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&q=80&w=150",
+    id: "pkg-wfh",
+    name: "Paket WFH & Nugas Tenang",
+    tagline: "Solusi Kerja & Nugas Seharian",
+    price: 45000,
+    originalPrice: 53000,
+    badge: "💻 Best Value",
+    image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=600",
+    description: "Paket hemat khusus Anda yang ingin nugas atau kerja tenang dengan koneksi WiFi kencang.",
+    itemsIncluded: [
+      "1x Kopi Susu Tenang Jiwa / Americano",
+      "1x Butter Croissant Renyah / Waffle",
+      "Akses WiFi Prioritas High Speed",
+      "Stopkontak Khusus di Meja",
+    ],
   },
   {
-    id: 4,
-    name: "Siti Nurhaliza",
-    role: "Food Content Creator",
-    rating: 5,
-    text: "Pengiriman cepat dan packaging-nya rapi banget! Tetap dingin waktu sampai di rumah. Paket Santai-nya hemat parah!",
-    date: "1 minggu lalu",
-    avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=150",
-  },
-  {
-    id: 5,
-    name: "Bagus Setiawan",
-    role: "Arsitek",
-    rating: 5,
-    text: "Rasa kopinya clean dan wangi. Butter Croissant-nya renyah banget. Tempat ngopi & pesan favorit setiap minggu di Bandung.",
-    date: "2 minggu lalu",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150",
+    id: "pkg-mabar",
+    name: "Paket Nongkrong Ber-4",
+    tagline: "Makin Ramai Makin Hemat",
+    price: 120000,
+    originalPrice: 144000,
+    badge: "👥 Hemat Ber-4",
+    image: "https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&q=80&w=600",
+    description: "Paket mabar & kumpul seru bareng sahabat. Dapat 4 minuman favorit + snack basket komplit.",
+    itemsIncluded: [
+      "4x Minuman Kopi / Non-Kopi Pilihan",
+      "1x Almond Waffle Box Sharing",
+      "1x Basket Truffle French Fries",
+    ],
   },
 ];
 
@@ -192,7 +403,8 @@ const categories = [
   { key: "All", label: "Semua", icon: "✨" },
   { key: "kopi", label: "Kopi", icon: "☕" },
   { key: "non-kopi", label: "Non-Kopi", icon: "🍵" },
-  { key: "cemilan", label: "Pastry", icon: "🥐" },
+  { key: "makanan-berat", label: "Makanan Berat", icon: "🍛" },
+  { key: "cemilan", label: "Pastry & Snack", icon: "🥐" },
 ];
 
 const moodsList = ["Ngantuk Berat", "Lagi Badmood", "Butuh Nyantai", "Laper Dikit"];
@@ -377,6 +589,30 @@ export default function Template3() {
       return [...prev, { ...item, quantity: 1, notes: "", variant: selectedVariant }];
     });
     showToast(`${item.name} ditambahkan`);
+  }, [pendingVariants]);
+
+  const addPackageToCart = useCallback((pkg: PackageItem) => {
+    const selectedVariant = pendingVariants[pkg.id] || (pkg.customVariants ? pkg.customVariants[0] : "");
+    setCart((prev) => {
+      const existing = prev.find((i) => i.id === pkg.id);
+      if (existing) return prev.map((i) => (i.id === pkg.id ? { ...i, quantity: i.quantity + 1 } : i));
+      return [
+        ...prev,
+        {
+          id: pkg.id,
+          name: pkg.name,
+          description: pkg.description,
+          price: pkg.price,
+          image: pkg.image,
+          category: "paket",
+          isAvailable: true,
+          quantity: 1,
+          variant: selectedVariant,
+          notes: pkg.itemsIncluded.join(", "),
+        },
+      ];
+    });
+    showToast(`${pkg.name} ditambahkan ke pesanan`);
   }, [pendingVariants]);
 
   const updateQuantity = (id: string | number, delta: number) => {
@@ -619,6 +855,98 @@ export default function Template3() {
               </motion.div>
             )}
           </AnimatePresence>
+        </motion.section>
+
+        {/* Paket Spesial & Celebration Cards Section */}
+        <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-20">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 bg-sage/10 px-4 py-1.5 rounded-full text-xs text-sage font-medium mb-3 border border-sage/20">
+              <Gift className="w-3.5 h-3.5" /><span>Penawaran Spesial & Perayaan</span>
+            </div>
+            <h3 className="font-serif text-3xl md:text-4xl text-charcoal mb-3">Paket Spesial Tenang Jiwa</h3>
+            <p className="text-stone text-sm max-w-lg mx-auto">
+              Pilihan paket hemat, WFH, & perayaan ulang tahun istimewa untuk momen tak terlupakan.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {SPECIAL_PACKAGES.map((pkg) => (
+              <motion.div
+                key={pkg.id}
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.3 }}
+                className="bg-white rounded-3xl overflow-hidden border border-latte shadow-elegant flex flex-col justify-between"
+              >
+                <div>
+                  <div className="h-52 overflow-hidden relative">
+                    <img src={pkg.image} alt={pkg.name} className="w-full h-full object-cover" />
+                    {pkg.badge && (
+                      <div className="absolute top-4 left-4 z-10">
+                        <span className="bg-sage text-white text-[11px] font-medium px-3.5 py-1 rounded-full shadow-sm border border-white/20">
+                          {pkg.badge}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-6 md:p-8">
+                    <p className="text-xs text-sage font-medium tracking-wide uppercase mb-1">{pkg.tagline}</p>
+                    <h4 className="font-serif text-xl md:text-2xl text-charcoal mb-3">{pkg.name}</h4>
+                    <p className="text-sm text-stone font-light mb-6 leading-relaxed">{pkg.description}</p>
+
+                    {/* Includes List */}
+                    <div className="bg-bone/60 rounded-2xl p-4 mb-6 border border-latte/50 space-y-2">
+                      <p className="text-[11px] font-medium text-stone uppercase tracking-wider mb-2">Termasuk Dalam Paket:</p>
+                      {pkg.itemsIncluded.map((inc, i) => (
+                        <div key={i} className="flex items-start gap-2.5 text-xs text-charcoal/80">
+                          <Check className="w-4 h-4 text-sage shrink-0 mt-0.5" />
+                          <span>{inc}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Cake/Variant Selector if exists */}
+                    {pkg.customVariants && (
+                      <div className="mb-6">
+                        <p className="text-xs font-medium text-stone mb-2">Pilih Varian Cake:</p>
+                        <div className="flex gap-2 flex-wrap">
+                          {pkg.customVariants.map((v) => {
+                            const isSelected = (pendingVariants[pkg.id] || pkg.customVariants![0]) === v;
+                            return (
+                              <button
+                                key={v}
+                                onClick={() => setPendingVariants((prev) => ({ ...prev, [pkg.id]: v }))}
+                                className={`text-xs px-3.5 py-1.5 rounded-full border transition-all ${
+                                  isSelected ? "bg-sage text-white border-sage" : "border-latte text-stone hover:border-sage/40"
+                                }`}
+                              >
+                                {v}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="px-6 md:px-8 pb-6 md:pb-8 pt-0 flex items-center justify-between border-t border-latte/40 pt-4 mt-auto">
+                  <div>
+                    {pkg.originalPrice && (
+                      <p className="text-xs line-through text-stone">{formatRupiah(pkg.originalPrice)}</p>
+                    )}
+                    <p className="text-2xl font-serif font-medium text-charcoal">{formatRupiah(pkg.price)}</p>
+                  </div>
+                  <button
+                    onClick={() => addPackageToCart(pkg)}
+                    className="bg-charcoal hover:bg-sage text-white text-xs md:text-sm font-medium px-6 py-3 rounded-2xl transition-all shadow-sm active:scale-95 flex items-center gap-2"
+                  >
+                    <Plus className="w-4 h-4" />
+                    <span>Pesan Paket Ini</span>
+                  </button>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </motion.section>
 
         {/* Categories & Menu */}
