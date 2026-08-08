@@ -182,11 +182,15 @@ export default function Template3() {
 
   const menuSectionRef = useRef<HTMLDivElement>(null);
 
-  // Auto scroll to menu section when typing in search bar
+  // Auto scroll to menu section after 3 seconds of inactivity after typing in search bar
   useEffect(() => {
-    if (search.trim().length > 0) {
+    if (search.trim().length === 0) return;
+
+    const timer = setTimeout(() => {
       menuSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    }, 3000);
+
+    return () => clearTimeout(timer);
   }, [search]);
 
   const [isCartOpen, setIsCartOpen] = useState(false);
