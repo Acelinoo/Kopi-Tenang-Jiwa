@@ -1406,12 +1406,19 @@ export default function Template3() {
         )}
       </AnimatePresence>
 
-      {/* Toast */}
+      {/* Toast Notification (Top Center Dropdown) */}
       <AnimatePresence>
         {toast.show && (
-          <motion.div initial={{ opacity: 0, y: 50, scale: 0.9 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }}
-            className="fixed bottom-10 left-1/2 -translate-x-1/2 z-[200] bg-charcoal text-white px-6 py-3 rounded-full shadow-elegant text-sm flex items-center gap-2"
-          ><Check className="w-4 h-4 text-sage" /> {toast.message}</motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: -30, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            className="fixed top-24 left-1/2 -translate-x-1/2 z-[200] bg-charcoal/95 backdrop-blur-md text-bone px-5 py-2.5 rounded-full shadow-2xl border border-latte/20 text-xs sm:text-sm flex items-center gap-2 max-w-[90vw]"
+          >
+            <Check className="w-4 h-4 text-sage shrink-0" />
+            <span className="truncate">{toast.message}</span>
+          </motion.div>
         )}
       </AnimatePresence>
 
