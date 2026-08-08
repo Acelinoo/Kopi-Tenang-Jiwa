@@ -398,6 +398,55 @@ const SPECIAL_PACKAGES: PackageItem[] = [
   },
 ];
 
+// ─── Testimonials Data (Social Proof) ────────────────────────────────────
+const TESTIMONIALS = [
+  {
+    id: 1,
+    name: "Rizky Ramadhan",
+    role: "Pecinta Kopi Aren",
+    rating: 5,
+    text: "Kopi Susu Tenang Jiwa rahasianya ga pernah gagal. Aren organik-nya pas banget, gak terlalu manis & gak bikin enek!",
+    date: "2 hari lalu",
+    avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150",
+  },
+  {
+    id: 2,
+    name: "Annisa Larasati",
+    role: "Mahasiswi Bandung",
+    rating: 5,
+    text: "Suasananya tenang banget buat nugas. Matcha Cream Latte-nya super creamy dan pas di lidah. Langganan!",
+    date: "3 hari lalu",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150",
+  },
+  {
+    id: 3,
+    name: "Deni Prasetyo",
+    role: "Software Engineer",
+    rating: 5,
+    text: "Croissant renyah berlapis-lapis dipadukan sama Americano panas, perpaduan moodbooster kerja paling ampuh.",
+    date: "1 minggu lalu",
+    avatar: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&q=80&w=150",
+  },
+  {
+    id: 4,
+    name: "Siti Nurhaliza",
+    role: "Food Content Creator",
+    rating: 5,
+    text: "Pengiriman cepat dan packaging-nya rapi banget! Tetap dingin waktu sampai di rumah. Paket Santai-nya hemat parah!",
+    date: "1 minggu lalu",
+    avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=150",
+  },
+  {
+    id: 5,
+    name: "Bagus Setiawan",
+    role: "Arsitek",
+    rating: 5,
+    text: "Rasa kopinya clean dan wangi. Butter Croissant-nya renyah banget. Tempat ngopi & pesan favorit setiap minggu di Bandung.",
+    date: "2 minggu lalu",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150",
+  },
+];
+
 // ─── Constants ───────────────────────────────────────────────────────────
 const categories = [
   { key: "All", label: "Semua", icon: "✨" },
