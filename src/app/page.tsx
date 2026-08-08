@@ -182,16 +182,26 @@ export default function Template3() {
 
   const menuSectionRef = useRef<HTMLDivElement>(null);
 
-  // Auto scroll to menu section after 3 seconds of inactivity after typing in search bar
+  const scrollToMenu = useCallback(() => {
+    menuSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      scrollToMenu();
+    }
+  };
+
+  // Auto scroll to menu section after 2 seconds of inactivity after typing in search bar
   useEffect(() => {
     if (search.trim().length === 0) return;
 
     const timer = setTimeout(() => {
-      menuSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 3000);
+      scrollToMenu();
+    }, 2000);
 
     return () => clearTimeout(timer);
-  }, [search]);
+  }, [search, scrollToMenu]);
 
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
@@ -404,7 +414,7 @@ export default function Template3() {
           <div className="flex gap-3 items-center">
             <div className="hidden md:flex relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-stone w-4 h-4" />
-              <input type="text" placeholder="Cari menu..." value={search} onChange={(e) => setSearch(e.target.value)}
+              <input type="text" placeholder="Cari menu..." value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={handleSearchKeyDown}
                 className="input-elegant pl-11 py-2 w-64 rounded-full text-sm bg-white/50 backdrop-blur-md"
               />
             </div>
@@ -435,7 +445,7 @@ export default function Template3() {
               <div className="px-6 py-3 bg-white/50 backdrop-blur-md">
                 <div className="relative">
                   <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-stone w-4 h-4" />
-                  <input type="text" placeholder="Cari menu favoritmu..." value={search} onChange={(e) => setSearch(e.target.value)}
+                  <input type="text" placeholder="Cari menu favoritmu..." value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={handleSearchKeyDown}
                     className="input-elegant pl-11 py-2.5 w-full rounded-full text-sm" autoFocus
                   />
                 </div>
