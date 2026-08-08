@@ -11,6 +11,7 @@ import {
   Maximize2, Eye, Compass, ShieldCheck, Wifi, Zap, Users, Award, Smile
 } from "lucide-react";
 import { MenuItem, CartItem, VoucherConfig, PackageItem, CafeSpot } from "@/lib/types";
+import CircularGallery from "@/components/CircularGallery";
 
 // ─── Brand & Config ─────────────────────────────────────────────────────
 const BRAND_NAME = "Kopi Tenang Jiwa";
@@ -18,6 +19,14 @@ const BRAND_TAGLINE = "Seduh perlahan, nikmati detik ini.";
 const BRAND_ADDRESS = "Jl. Ketenangan No. 8, Bandung";
 const WA_NUMBER = "6289655223792";
 const SHEETDB_API_URL = "https://sheetdb.io/api/v1/YOUR_API_ID";
+
+const KOPI_TENANG_JIWA_SPOTS = [
+  { image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=1000", text: "Spot 1: Indoor Lounge Utama" },
+  { image: "https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&q=80&w=1000", text: "Spot 2: Outdoor Garden Patio" },
+  { image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=1000", text: "Spot 3: Working & Nugas Nook" },
+  { image: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&q=80&w=1000", text: "Spot 4: Artisan Barista Coffee Bar" },
+  { image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&q=80&w=1000", text: "Spot 5: Rooftop Senja Terrace" },
+];
 
 
 const BANK_ACCOUNTS = [
@@ -515,59 +524,6 @@ const CAFE_SPOTS: CafeSpot[] = [
 
 const SPOT_CATEGORIES = ["Semua Spot", "Indoor Lounge", "Outdoor Garden", "Working Nook", "Barista Corner", "Rooftop Terrace"];
 
-const CIRCULAR_GALLERY_ITEMS: CafeSpot[] = [
-  {
-    id: "spot-1",
-    title: "Warm Wood Lounge",
-    category: "Indoor Lounge",
-    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=1000",
-    description: "Sudut ruang santai indoor ber-AC dengan sentuhan sofa kayu hangat khas Kopi Tenang Jiwa.",
-    ambiance: "Hangat, Calm & Cozy",
-    capacity: "2 - 6 Orang",
-    features: ["Ruang Full AC", "Stopkontak Setiap Kursi", "Bebas Asap Rokok", "Sofa Cushion Premium"]
-  },
-  {
-    id: "spot-2",
-    title: "Outdoor Garden Patio",
-    category: "Outdoor Garden",
-    image: "https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&q=80&w=1000",
-    description: "Taman terbuka hijau berangin sejuk dengan tanaman tropis & ambient fairy lights cantik di malam hari.",
-    ambiance: "Sejuk, Asri & Aesthetic",
-    capacity: "4 - 8 Orang",
-    features: ["Smoking Area Friendly", "Rindang Tanaman Hijau", "Lampu Fairy Light Romantis", "Pet-Friendly Outer Zone"]
-  },
-  {
-    id: "spot-3",
-    title: "Focused Nugas Corner",
-    category: "Working Nook",
-    image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=1000",
-    description: "Sudut tenang untuk kerja (WFH) dan nugas, dilengkapi meja kayu ergonomis & koneksi WiFi 100Mbps.",
-    ambiance: "Hening, Fokus & Produktif",
-    capacity: "1 - 2 Orang",
-    features: ["Stopkontak Ganda tiap Kursi", "WiFi High Speed 100Mbps", "Lampu Baca Individual", "Quiet Zone Non-Bisa Bising"]
-  },
-  {
-    id: "spot-4",
-    title: "Artisan Barista Counter",
-    category: "Barista Corner",
-    image: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&q=80&w=1000",
-    description: "Area slow bar langsung di mana pengunjung dapat menikmati aroma kopi segar & menyaksikan penyeduhan espresso murni.",
-    ambiance: "Aroma Espresso & Interactive Bar",
-    capacity: "Direct Bar Seating",
-    features: ["Manual Brew Showcase", "Diskusi Varian Biji Kopi", "Aroma Kopi Menyegarkan", "Interaktif Bareng Barista"]
-  },
-  {
-    id: "spot-5",
-    title: "Rooftop Senja Terrace",
-    category: "Rooftop Terrace",
-    image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&q=80&w=1000",
-    description: "Spot lantai atas terbuka untuk menikmati panorama langit sore Kota Bandung dengan tiupan angin alami.",
-    ambiance: "Chill, Chill Vibe & Sunset View",
-    capacity: "2 - 4 Orang",
-    features: ["View Sunset & Sky Deck", "Open-Air Natural Breeze", "Musik Akustik Santai", "Spot Foto Instagramable"]
-  }
-];
-
 // ─── Constants ───────────────────────────────────────────────────────────
 const categories = [
   { key: "All", label: "Semua", icon: "✨" },
@@ -634,7 +590,6 @@ export default function Template3() {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [selectedSpotCategory, setSelectedSpotCategory] = useState("Semua Spot");
   const [activeSpotModal, setActiveSpotModal] = useState<CafeSpot | null>(null);
-  const [activeCircularIndex, setActiveCircularIndex] = useState(0);
 
   const menuSectionRef = useRef<HTMLDivElement>(null);
 
@@ -1197,130 +1152,15 @@ export default function Template3() {
               </p>
             </div>
 
-            {/* 3D Circular Curved Gallery Component (5 Aesthetic Cafe Spots) */}
-            <div className="relative py-4 mb-12">
-              {/* Perspective Carousel Container */}
-              <div 
-                className="relative h-[420px] sm:h-[480px] md:h-[520px] w-full flex items-center justify-center overflow-hidden" 
-                style={{ perspective: "1200px" }}
-              >
-                <div className="relative w-full max-w-4xl h-full flex items-center justify-center">
-                  {CIRCULAR_GALLERY_ITEMS.map((spot, i) => {
-                    let diff = i - activeCircularIndex;
-                    // Circular wrap diff to range [-2, 2]
-                    if (diff > 2) diff -= 5;
-                    if (diff < -2) diff += 5;
-
-                    const isActive = diff === 0;
-
-                    // Calculate 3D curved transform parameters
-                    const rotateY = diff * -25;
-                    const translateX = diff * 70;
-                    const scale = isActive ? 1.05 : Math.max(0.72, 1 - Math.abs(diff) * 0.18);
-                    const opacity = isActive ? 1 : Math.max(0.4, 1 - Math.abs(diff) * 0.35);
-                    const zIndex = 35 - Math.abs(diff) * 10;
-                    const translateZ = isActive ? 20 : -Math.abs(diff) * 100;
-
-                    return (
-                      <motion.div
-                        key={spot.id}
-                        animate={{
-                          rotateY: rotateY,
-                          x: `${translateX}%`,
-                          scale: scale,
-                          z: translateZ,
-                          opacity: opacity,
-                        }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 260,
-                          damping: 26,
-                        }}
-                        style={{
-                          zIndex: zIndex,
-                          transformStyle: "preserve-3d",
-                        }}
-                        onClick={() => setActiveCircularIndex(i)}
-                        className={`absolute w-[280px] sm:w-[360px] md:w-[440px] h-[340px] sm:h-[400px] md:h-[440px] rounded-3xl overflow-hidden cursor-pointer shadow-2xl border ${
-                          isActive ? "border-sage/50 ring-4 ring-sage/20" : "border-latte/60"
-                        } transition-shadow duration-300 group select-none bg-charcoal`}
-                      >
-                        <img
-                          src={spot.image}
-                          alt={spot.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 pointer-events-none"
-                        />
-
-                        {/* Dark Gradient Overlay for Typography */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/95 via-charcoal/40 to-transparent flex flex-col justify-end p-6 sm:p-8 text-white pointer-events-none">
-                          <div className="flex items-center gap-2 mb-2 flex-wrap">
-                            <span className="bg-sage text-white text-[10px] sm:text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
-                              📍 {spot.category}
-                            </span>
-                            <span className="bg-white/20 backdrop-blur-md text-white text-[10px] sm:text-xs px-2.5 py-1 rounded-full">
-                              ✨ {spot.ambiance}
-                            </span>
-                          </div>
-
-                          <h4 className="font-serif text-xl sm:text-2xl font-bold leading-tight mb-1 text-white group-hover:text-sage transition-colors">
-                            {spot.title}
-                          </h4>
-                          <p className="text-xs sm:text-sm text-bone/80 font-light line-clamp-2 mb-4">
-                            {spot.description}
-                          </p>
-
-                          {/* Quick Action Preview Button on Active Slide */}
-                          {isActive && (
-                            <motion.button
-                              initial={{ opacity: 0, y: 10 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setActiveSpotModal(spot);
-                              }}
-                              className="pointer-events-auto bg-white/90 hover:bg-white text-charcoal hover:text-sage text-xs font-semibold px-4 py-2.5 rounded-xl transition-all shadow-md flex items-center justify-between w-full mt-1"
-                            >
-                              <span>Lihat Detail Spot ini</span>
-                              <Maximize2 className="w-4 h-4" />
-                            </motion.button>
-                          )}
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-
-                {/* Left & Right Circular Gallery Arrow Navigation Buttons */}
-                <button
-                  onClick={() => setActiveCircularIndex((prev) => (prev - 1 + 5) % 5)}
-                  className="absolute left-2 md:left-6 z-40 p-3.5 rounded-full bg-white/90 backdrop-blur-md border border-latte text-charcoal hover:bg-sage hover:text-white shadow-xl transition-all duration-300 active:scale-95"
-                  aria-label="Sebelumnya"
-                >
-                  <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
-                </button>
-
-                <button
-                  onClick={() => setActiveCircularIndex((prev) => (prev + 1) % 5)}
-                  className="absolute right-2 md:right-6 z-40 p-3.5 rounded-full bg-white/90 backdrop-blur-md border border-latte text-charcoal hover:bg-sage hover:text-white shadow-xl transition-all duration-300 active:scale-95"
-                  aria-label="Berikutnya"
-                >
-                  <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
-                </button>
-              </div>
-
-              {/* Indicator Dots */}
-              <div className="flex justify-center items-center gap-2 mt-4">
-                {CIRCULAR_GALLERY_ITEMS.map((item, idx) => (
-                  <button
-                    key={item.id}
-                    onClick={() => setActiveCircularIndex(idx)}
-                    className={`h-2.5 rounded-full transition-all duration-300 ${
-                      activeCircularIndex === idx ? "w-8 bg-sage" : "w-2.5 bg-latte hover:bg-stone/50"
-                    }`}
-                    aria-label={`Slide ${idx + 1}`}
-                  />
-                ))}
-              </div>
+            {/* ReactBits CircularGallery Component (5 Spots of 1 Venue) */}
+            <div style={{ height: '550px', position: 'relative' }} className="my-4">
+              <CircularGallery 
+                items={KOPI_TENANG_JIWA_SPOTS} 
+                bend={3} 
+                textColor="#ffffff" 
+                borderRadius={0.05} 
+                scrollEase={0.02}
+              />
             </div>
 
             {/* Stats Row */}
