@@ -38,3 +38,15 @@ export type PackageItem = {
   customVariants?: string[];
   description: string;
 };
+
+export type CafeSpot = {
+  id: string;
+  title: string;
+  category: "Indoor Lounge" | "Outdoor Garden" | "Working Nook" | "Barista Corner" | "Rooftop Terrace";
+  image: string;
+  description: string;
+  ambiance: string;
+  capacity: string;
+  features: string[];
+};
+

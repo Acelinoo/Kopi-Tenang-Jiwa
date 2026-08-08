@@ -5,11 +5,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   ShoppingBag, Search, X, Plus, Minus,
   Coffee, MessageSquare, Phone,
-  Copy, Check, ChevronRight,
+  Copy, Check, ChevronRight, ChevronDown, Menu as MenuIcon,
   Package, MapPin, Ticket, Leaf, Clock, Gift,
-  Instagram, Star, Heart, Send
+  Instagram, Star, Heart, Send, Sparkles,
+  Maximize2, Eye, Compass, ShieldCheck, Wifi, Zap, Users, Award, Smile
 } from "lucide-react";
-import { MenuItem, CartItem, VoucherConfig, PackageItem } from "@/lib/types";
+import { MenuItem, CartItem, VoucherConfig, PackageItem, CafeSpot } from "@/lib/types";
 
 // ─── Brand & Config ─────────────────────────────────────────────────────
 const BRAND_NAME = "Kopi Tenang Jiwa";
@@ -17,6 +18,7 @@ const BRAND_TAGLINE = "Seduh perlahan, nikmati detik ini.";
 const BRAND_ADDRESS = "Jl. Ketenangan No. 8, Bandung";
 const WA_NUMBER = "6289655223792";
 const SHEETDB_API_URL = "https://sheetdb.io/api/v1/YOUR_API_ID";
+
 
 const BANK_ACCOUNTS = [
   { bank: "Bank Jago", number: "104110415462" },
@@ -447,6 +449,72 @@ const TESTIMONIALS = [
   },
 ];
 
+// ─── Cafe Spots Data (Gallery & Spots Showcase) ──────────────────────────
+const CAFE_SPOTS: CafeSpot[] = [
+  {
+    id: "spot-1",
+    title: "Warm Wood Lounge",
+    category: "Indoor Lounge",
+    image: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=800",
+    description: "Area indoor ber-AC dengan sofa empuk, pencahayaan hangat, dan suasana menenangkan cocok untuk berdiskusi santai.",
+    ambiance: "Hangat, Calm & Cozy",
+    capacity: "2 - 6 Orang per Meja",
+    features: ["Ruang Full AC", "Stopkontak Setiap Kursi", "Bebas Asap Rokok", "Sofa Cushion Premium"],
+  },
+  {
+    id: "spot-2",
+    title: "Outdoor Garden Patio",
+    category: "Outdoor Garden",
+    image: "https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&q=80&w=800",
+    description: "Taman terbuka hijau berangin sejuk dengan tanaman tropis & ambient lighting cantik di malam hari.",
+    ambiance: "Sejuk, Asri & Aesthetic",
+    capacity: "4 - 8 Orang",
+    features: ["Smoking Area Friendly", "Rindang Tanaman Hijau", "Lampu Fairy Light Romantis", "Pet-Friendly Outer Zone"],
+  },
+  {
+    id: "spot-3",
+    title: "Focused Nugas Corner",
+    category: "Working Nook",
+    image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800",
+    description: "Sudut tenang untuk kerja (WFH) dan nugas, dilengkapi meja kayu ergonomis & koneksi WiFi 100Mbps.",
+    ambiance: "Hening, Fokus & Produktif",
+    capacity: "1 - 2 Orang per Bilik",
+    features: ["Stopkontak Ganda tiap Kursi", "WiFi High Speed 100Mbps", "Lampu Baca Individual", "Quiet Zone Non-Bisa Bising"],
+  },
+  {
+    id: "spot-4",
+    title: "Artisan Barista Counter",
+    category: "Barista Corner",
+    image: "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&q=80&w=800",
+    description: "Area slow bar langsung di mana pengunjung dapat menikmati aroma kopi segar & menyaksikan penyeduhan espresso murni.",
+    ambiance: "Aroma Espresso & Interactive Bar",
+    capacity: "Direct Bar Seating",
+    features: ["Manual Brew Showcase", "Diskusi Varian Biji Kopi", "Aroma Kopi Menyegarkan", "Interaktif Bareng Barista"],
+  },
+  {
+    id: "spot-5",
+    title: "Rooftop Senja Terrace",
+    category: "Rooftop Terrace",
+    image: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&q=80&w=800",
+    description: "Spot lantai atas terbuka untuk menikmati panorama langit sore Kota Bandung dengan tiupan angin alami.",
+    ambiance: "Chill, Chill Vibe & Sunset View",
+    capacity: "2 - 4 Orang",
+    features: ["View Sunset & Sky Deck", "Open-Air Natural Breeze", "Musik Akustik Santai", "Spot Foto Instagramable"],
+  },
+  {
+    id: "spot-6",
+    title: "Mezzanine Group Discussion",
+    category: "Indoor Lounge",
+    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=80&w=800",
+    description: "Meja kelompok semi-privat di lantai dua untuk rapat tim kecil, tugas kelompok, atau mini perayaan ulang tahun.",
+    ambiance: "Privat, Modis & Luas",
+    capacity: "6 - 12 Orang",
+    features: ["Meja Komunal Panjang", "Semi-Private Zone", "Stopkontak Banyak", "Dekat Kasir & Toilet"],
+  },
+];
+
+const SPOT_CATEGORIES = ["Semua Spot", "Indoor Lounge", "Outdoor Garden", "Working Nook", "Barista Corner", "Rooftop Terrace"];
+
 // ─── Constants ───────────────────────────────────────────────────────────
 const categories = [
   { key: "All", label: "Semua", icon: "✨" },
@@ -508,7 +576,26 @@ export default function Template3() {
   const [category, setCategory] = useState("All");
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
 
+  // Navbar & Spot Gallery States
+  const [isPaketDropdownOpen, setIsPaketDropdownOpen] = useState(false);
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const [selectedSpotCategory, setSelectedSpotCategory] = useState("Semua Spot");
+  const [activeSpotModal, setActiveSpotModal] = useState<CafeSpot | null>(null);
+
   const menuSectionRef = useRef<HTMLDivElement>(null);
+
+  const scrollToSection = useCallback((id: string) => {
+    setIsPaketDropdownOpen(false);
+    setIsMobileNavOpen(false);
+    if (id === "hero") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, []);
 
   const scrollToMenu = useCallback(() => {
     menuSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -622,6 +709,11 @@ export default function Template3() {
     const matchMood = !selectedMood || (item.moods && item.moods.includes(selectedMood));
     return matchCat && matchSearch && matchMood;
   }), [items, category, search, selectedMood]);
+
+  const filteredSpots = useMemo(() => {
+    if (selectedSpotCategory === "Semua Spot") return CAFE_SPOTS;
+    return CAFE_SPOTS.filter((spot) => spot.category === selectedSpotCategory);
+  }, [selectedSpotCategory]);
 
   // ── Cart Actions ──
   const showToast = (message: string) => {
@@ -760,47 +852,242 @@ export default function Template3() {
       <div className="absolute bottom-[20%] right-[-10%] w-[30%] h-[30%] rounded-full bg-latte/40 blur-[100px] pointer-events-none" />
 
       {/* Header */}
-      <header className="sticky top-0 z-40 glass-panel border-b-0 border-latte/30">
+      <header className="sticky top-0 z-40 glass-panel border-b border-latte/40 shadow-sm transition-all duration-300">
         <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
-          <h1 className="text-xl md:text-2xl font-serif text-charcoal tracking-wide">Kopi Tenang Jiwa.</h1>
+          
+          {/* Logo & Brand */}
+          <button 
+            onClick={() => scrollToSection("hero")} 
+            className="text-left group flex items-center gap-2.5 focus:outline-none"
+          >
+            <div className="w-10 h-10 rounded-full bg-sage/10 border border-sage/30 flex items-center justify-center text-sage group-hover:bg-sage group-hover:text-white transition-all duration-300">
+              <Coffee className="w-5 h-5" />
+            </div>
+            <div>
+              <h1 className="text-lg md:text-xl font-serif text-charcoal tracking-wide leading-tight group-hover:text-sage transition-colors">
+                Kopi Tenang Jiwa.
+              </h1>
+              <span className="text-[10px] text-stone font-light block -mt-0.5">Coffeeshop & Artisan Bakery</span>
+            </div>
+          </button>
+
+          {/* Desktop Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-charcoal/80">
+            <button 
+              onClick={() => scrollToSection("hero")}
+              className="hover:text-sage transition-colors py-2 relative group"
+            >
+              <span>Home</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-sage transition-all duration-300 group-hover:w-full" />
+            </button>
+
+            <button 
+              onClick={() => scrollToSection("about-section")}
+              className="hover:text-sage transition-colors py-2 relative group"
+            >
+              <span>About</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-sage transition-all duration-300 group-hover:w-full" />
+            </button>
+
+            {/* Paket Dropdown */}
+            <div className="relative">
+              <button 
+                onClick={() => setIsPaketDropdownOpen(!isPaketDropdownOpen)}
+                onMouseEnter={() => setIsPaketDropdownOpen(true)}
+                className="flex items-center gap-1.5 hover:text-sage transition-colors py-2 focus:outline-none"
+              >
+                <span>Paket</span>
+                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isPaketDropdownOpen ? "rotate-180 text-sage" : ""}`} />
+              </button>
+
+              {/* Dropdown Popover */}
+              <AnimatePresence>
+                {isPaketDropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
+                    onMouseLeave={() => setIsPaketDropdownOpen(false)}
+                    className="absolute top-full left-0 mt-1 w-64 bg-white/95 backdrop-blur-xl rounded-2xl p-2 shadow-2xl border border-latte z-50"
+                  >
+                    <button
+                      onClick={() => scrollToSection("paket-santai-section")}
+                      className="w-full text-left p-3 rounded-xl hover:bg-bone transition-colors flex items-start gap-3 group"
+                    >
+                      <div className="p-2 rounded-lg bg-sage/10 text-sage group-hover:bg-sage group-hover:text-white transition-colors">
+                        <Package className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-semibold text-charcoal group-hover:text-sage transition-colors">Paket Santai</p>
+                        <p className="text-[11px] text-stone font-light">Kombinasi Kopi + Pastry hemat Rp 5.000</p>
+                      </div>
+                    </button>
+
+                    <button
+                      onClick={() => scrollToSection("paket-special-section")}
+                      className="w-full text-left p-3 rounded-xl hover:bg-bone transition-colors flex items-start gap-3 group mt-1"
+                    >
+                      <div className="p-2 rounded-lg bg-latte/60 text-charcoal group-hover:bg-charcoal group-hover:text-white transition-colors">
+                        <Gift className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-semibold text-charcoal group-hover:text-sage transition-colors">Paket Special</p>
+                        <p className="text-[11px] text-stone font-light">WFH, Nongkrong & Paket Birthday</p>
+                      </div>
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            <button 
+              onClick={() => scrollToSection("menu-section")}
+              className="hover:text-sage transition-colors py-2 relative group"
+            >
+              <span>Menu</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-sage transition-all duration-300 group-hover:w-full" />
+            </button>
+          </nav>
+
+          {/* Right Header Actions */}
           <div className="flex gap-3 items-center">
             <div className="hidden md:flex relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-stone w-4 h-4" />
-              <input type="text" placeholder="Cari menu..." value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={handleSearchKeyDown}
-                className="input-elegant pl-11 py-2 w-64 rounded-full text-sm bg-white/50 backdrop-blur-md"
+              <input 
+                type="text" 
+                placeholder="Cari menu..." 
+                value={search} 
+                onChange={(e) => setSearch(e.target.value)} 
+                onKeyDown={handleSearchKeyDown}
+                className="input-elegant pl-11 py-2 w-52 xl:w-64 rounded-full text-sm bg-white/50 backdrop-blur-md"
               />
             </div>
-            {/* Mobile Search Button */}
-            <motion.button onClick={() => setIsMobileSearchOpen(!isMobileSearchOpen)} whileTap={{ scale: 0.95 }}
+
+            {/* Mobile Search Toggle */}
+            <motion.button 
+              onClick={() => setIsMobileSearchOpen(!isMobileSearchOpen)} 
+              whileTap={{ scale: 0.95 }}
               className="md:hidden p-3 rounded-full bg-white border border-latte text-charcoal hover:border-sage hover:text-sage transition-all duration-300 shadow-sm"
+              aria-label="Cari Menu"
             >
               <Search className="w-5 h-5" />
             </motion.button>
-            <motion.button onClick={() => setIsCartOpen(true)} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
+
+            {/* Cart Button */}
+            <motion.button 
+              onClick={() => setIsCartOpen(true)} 
+              whileHover={{ scale: 1.05 }} 
+              whileTap={{ scale: 0.95 }}
               className="relative p-3 rounded-full bg-white border border-latte text-charcoal hover:border-sage hover:text-sage transition-all duration-300 shadow-sm"
+              aria-label="Keranjang Belanja"
             >
               <ShoppingBag className="w-5 h-5" />
               <AnimatePresence>
                 {cartItemCount > 0 && (
-                  <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}
-                    className="absolute -top-1 -right-1 bg-sage text-white text-[10px] font-medium w-5 h-5 flex items-center justify-center rounded-full"
-                  >{cartItemCount}</motion.span>
+                  <motion.span 
+                    initial={{ scale: 0 }} 
+                    animate={{ scale: 1 }} 
+                    exit={{ scale: 0 }}
+                    className="absolute -top-1 -right-1 bg-sage text-white text-[10px] font-medium w-5 h-5 flex items-center justify-center rounded-full shadow-sm"
+                  >
+                    {cartItemCount}
+                  </motion.span>
                 )}
               </AnimatePresence>
             </motion.button>
+
+            {/* Mobile Nav Menu Drawer Toggle */}
+            <motion.button 
+              onClick={() => setIsMobileNavOpen(!isMobileNavOpen)} 
+              whileTap={{ scale: 0.95 }}
+              className="lg:hidden p-3 rounded-full bg-white border border-latte text-charcoal hover:border-sage hover:text-sage transition-all duration-300 shadow-sm"
+              aria-label="Menu Navigasi"
+            >
+              {isMobileNavOpen ? <X className="w-5 h-5" /> : <MenuIcon className="w-5 h-5" />}
+            </motion.button>
           </div>
         </div>
+
         {/* Mobile Search Bar */}
         <AnimatePresence>
           {isMobileSearchOpen && (
-            <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="md:hidden overflow-hidden border-t border-latte/30">
+            <motion.div 
+              initial={{ height: 0, opacity: 0 }} 
+              animate={{ height: "auto", opacity: 1 }} 
+              exit={{ height: 0, opacity: 0 }} 
+              className="md:hidden overflow-hidden border-t border-latte/30"
+            >
               <div className="px-6 py-3 bg-white/50 backdrop-blur-md">
                 <div className="relative">
                   <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-stone w-4 h-4" />
-                  <input type="text" placeholder="Cari menu favoritmu..." value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={handleSearchKeyDown}
-                    className="input-elegant pl-11 py-2.5 w-full rounded-full text-sm" autoFocus
+                  <input 
+                    type="text" 
+                    placeholder="Cari menu favoritmu..." 
+                    value={search} 
+                    onChange={(e) => setSearch(e.target.value)} 
+                    onKeyDown={handleSearchKeyDown}
+                    className="input-elegant pl-11 py-2.5 w-full rounded-full text-sm" 
+                    autoFocus
                   />
                 </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Mobile Navigation Drawer */}
+        <AnimatePresence>
+          {isMobileNavOpen && (
+            <motion.div 
+              initial={{ height: 0, opacity: 0 }} 
+              animate={{ height: "auto", opacity: 1 }} 
+              exit={{ height: 0, opacity: 0 }} 
+              className="lg:hidden overflow-hidden border-t border-latte/30 bg-white/95 backdrop-blur-xl px-6 py-4 shadow-xl"
+            >
+              <div className="flex flex-col gap-3 font-medium text-charcoal">
+                <button 
+                  onClick={() => scrollToSection("hero")} 
+                  className="text-left py-2 hover:text-sage transition-colors border-b border-latte/30"
+                >
+                  Home
+                </button>
+                <button 
+                  onClick={() => scrollToSection("about-section")} 
+                  className="text-left py-2 hover:text-sage transition-colors border-b border-latte/30"
+                >
+                  About
+                </button>
+
+                {/* Mobile Dropdown Accordion for Paket */}
+                <div className="py-2 border-b border-latte/30">
+                  <div className="flex items-center justify-between text-stone text-xs font-semibold uppercase tracking-wider mb-2">
+                    <span>Paket Spesial</span>
+                  </div>
+                  <div className="pl-3 space-y-2">
+                    <button 
+                      onClick={() => scrollToSection("paket-santai-section")}
+                      className="w-full text-left py-1 text-sm text-charcoal hover:text-sage flex items-center gap-2"
+                    >
+                      <Package className="w-3.5 h-3.5 text-sage" />
+                      <span>Paket Santai (Combo Kopi & Pastry)</span>
+                    </button>
+                    <button 
+                      onClick={() => scrollToSection("paket-special-section")}
+                      className="w-full text-left py-1 text-sm text-charcoal hover:text-sage flex items-center gap-2"
+                    >
+                      <Gift className="w-3.5 h-3.5 text-sage" />
+                      <span>Paket Special (WFH, Birthday & Kumpul)</span>
+                    </button>
+                  </div>
+                </div>
+
+                <button 
+                  onClick={() => scrollToSection("menu-section")} 
+                  className="text-left py-2 hover:text-sage transition-colors"
+                >
+                  Menu
+                </button>
               </div>
             </motion.div>
           )}
@@ -810,25 +1097,246 @@ export default function Template3() {
       <main className="max-w-6xl mx-auto px-6 pt-12 pb-24 relative z-10">
 
         {/* Hero */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}
-          className="bg-white rounded-3xl p-10 md:p-14 mb-16 shadow-elegant border border-latte/50 relative overflow-hidden"
+        <div id="hero" className="scroll-mt-28">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}
+            className="bg-white rounded-3xl p-10 md:p-14 mb-16 shadow-elegant border border-latte/50 relative overflow-hidden"
+          >
+            <div className="max-w-xl relative z-10">
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="inline-flex items-center gap-2 bg-bone px-4 py-1.5 rounded-full text-xs text-sage font-medium mb-6 border border-latte">
+                <Leaf className="w-3.5 h-3.5" /><span>Biji kopi pilihan Nusantara</span>
+              </motion.div>
+              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-charcoal leading-tight mb-6">
+                Sruput kopinya,<br /><span className="text-sage">-nikmati harinya.</span>
+              </h2>
+              <p className="text-stone text-lg mb-8 font-light">
+                Rasakan ketenangan di setiap tegukan. <br /> Kami menyajikan kopi dan pastry premium dengan <br /> suasana yang menenangkan jiwa.
+              </p>
+            </div>
+            <motion.img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&q=80&w=800" alt="Kopi Tenang Jiwa"
+              className="absolute right-0 top-0 w-1/2 h-full object-cover rounded-l-[100px] hidden md:block opacity-90 animate-float"
+              initial={{ opacity: 0, x: 20 }} animate={{ opacity: 0.9, x: 0 }} transition={{ duration: 1, delay: 0.2 }}
+            />
+          </motion.div>
+        </div>
+
+        {/* About Cafe Section */}
+        <motion.section 
+          id="about-section" 
+          initial={{ opacity: 0, y: 30 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          viewport={{ once: true }} 
+          transition={{ duration: 0.8 }}
+          className="mb-24 scroll-mt-28"
         >
-          <div className="max-w-xl relative z-10">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }} className="inline-flex items-center gap-2 bg-bone px-4 py-1.5 rounded-full text-xs text-sage font-medium mb-6 border border-latte">
-              <Leaf className="w-3.5 h-3.5" /><span>Biji kopi pilihan Nusantara</span>
-            </motion.div>
-            <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-charcoal leading-tight mb-6">
-              Sruput kopinya,<br /><span className="text-sage">-nikmati harinya.</span>
-            </h2>
-            <p className="text-stone text-lg mb-8 font-light">
-              Rasakan ketenangan di setiap tegukan. <br /> Kami menyajikan kopi dan pastry premium dengan <br /> suasana yang menenangkan jiwa.
+          <div className="bg-white rounded-3xl p-8 md:p-12 shadow-elegant border border-latte/60 relative overflow-hidden">
+            {/* Header Badge */}
+            <div className="text-center max-w-2xl mx-auto mb-12">
+              <div className="inline-flex items-center gap-2 bg-sage/10 px-4 py-1.5 rounded-full text-xs text-sage font-semibold mb-3 border border-sage/20">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Tentang Kopi Tenang Jiwa</span>
+              </div>
+              <h3 className="font-serif text-3xl md:text-4xl text-charcoal mb-4">
+                Rumah Ketenangan Jiwa di Setiap Tegukan Kopi
+              </h3>
+              <p className="text-stone text-base font-light leading-relaxed">
+                Kopi Tenang Jiwa lahir dari filosofi menyajikan racikan biji kopi Nusantara pilihan berpadu dengan suasana hangat dan tenang. Di sini, Anda bukan sekadar menikmati kopi murni, tetapi juga jeda sejenak dari hiruk-pikuk rutinitas harian.
+              </p>
+            </div>
+
+            {/* Grid Story & Visual Banner */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-12">
+              <div className="lg:col-span-7 space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="p-5 rounded-2xl bg-bone/70 border border-latte hover:border-sage/40 transition-all duration-300">
+                    <div className="w-10 h-10 rounded-xl bg-sage/10 text-sage flex items-center justify-center mb-3">
+                      <Coffee className="w-5 h-5" />
+                    </div>
+                    <h4 className="font-serif text-base text-charcoal font-semibold mb-1">Biji Kopi Nusantara</h4>
+                    <p className="text-xs text-stone font-light leading-relaxed">
+                      Dipetik dari petani lokal pilihan dengan sangrai murni untuk cita rasa yang clean, harum, dan otentik.
+                    </p>
+                  </div>
+
+                  <div className="p-5 rounded-2xl bg-bone/70 border border-latte hover:border-sage/40 transition-all duration-300">
+                    <div className="w-10 h-10 rounded-xl bg-sage/10 text-sage flex items-center justify-center mb-3">
+                      <Heart className="w-5 h-5" />
+                    </div>
+                    <h4 className="font-serif text-base text-charcoal font-semibold mb-1">Suasana Homey & Calm</h4>
+                    <p className="text-xs text-stone font-light leading-relaxed">
+                      Sentuhan ornamen kayu hangat, pencahayaan lembut, dan musik acoustic yang bikin betah berlama-lama.
+                    </p>
+                  </div>
+
+                  <div className="p-5 rounded-2xl bg-bone/70 border border-latte hover:border-sage/40 transition-all duration-300">
+                    <div className="w-10 h-10 rounded-xl bg-sage/10 text-sage flex items-center justify-center mb-3">
+                      <Wifi className="w-5 h-5" />
+                    </div>
+                    <h4 className="font-serif text-base text-charcoal font-semibold mb-1">Work-Friendly Facilities</h4>
+                    <p className="text-xs text-stone font-light leading-relaxed">
+                      Akses WiFi High-Speed 100Mbps dan stopkontak melimpah di setiap sudut untuk mendukung WFH & nugasmu.
+                    </p>
+                  </div>
+
+                  <div className="p-5 rounded-2xl bg-bone/70 border border-latte hover:border-sage/40 transition-all duration-300">
+                    <div className="w-10 h-10 rounded-xl bg-sage/10 text-sage flex items-center justify-center mb-3">
+                      <Compass className="w-5 h-5" />
+                    </div>
+                    <h4 className="font-serif text-base text-charcoal font-semibold mb-1">Dual Zone Area</h4>
+                    <p className="text-xs text-stone font-light leading-relaxed">
+                      Nikmati area Indoor AC berpendingin nyaman maupun Outdoor Garden sejuk bertanaman rindang.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Cafe Ambiance Image Showcase */}
+              <div className="lg:col-span-5 relative">
+                <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-latte group h-[340px]">
+                  <img 
+                    src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=800" 
+                    alt="Interior Kopi Tenang Jiwa" 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-transparent to-transparent flex flex-col justify-end p-6 text-white">
+                    <span className="text-[11px] font-medium text-sage bg-white/90 backdrop-blur-md px-3 py-1 rounded-full w-max mb-2">
+                      📍 Jl. Ketenangan No. 8, Bandung
+                    </span>
+                    <h4 className="font-serif text-xl font-medium">Sudut Tenang Jiwa Utama</h4>
+                    <p className="text-xs text-bone/80 font-light">Tempat terbaik untuk melepas penat dan mencari inspirasi baru.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Stats Row */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8 border-t border-latte/50 text-center">
+              <div className="p-4">
+                <p className="text-3xl font-serif font-bold text-sage">4.9 / 5.0</p>
+                <p className="text-xs text-stone font-light mt-1">⭐ 500+ Ulasan Positif Pelanggan</p>
+              </div>
+              <div className="p-4">
+                <p className="text-3xl font-serif font-bold text-charcoal">5+ Tahun</p>
+                <p className="text-xs text-stone font-light mt-1">☕ Menyeduh Kopi Berkualitas</p>
+              </div>
+              <div className="p-4">
+                <p className="text-3xl font-serif font-bold text-sage">50+ Varian</p>
+                <p className="text-xs text-stone font-light mt-1">🥐 Kopi, Non-Kopi & Bakery</p>
+              </div>
+              <div className="p-4">
+                <p className="text-3xl font-serif font-bold text-charcoal">100%</p>
+                <p className="text-xs text-stone font-light mt-1">🌿 Biji Kopi Lokal Nusantara</p>
+              </div>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* Spot Cafe Gallery Section */}
+        <motion.section 
+          id="gallery-section" 
+          initial={{ opacity: 0, y: 30 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          viewport={{ once: true }} 
+          transition={{ duration: 0.8 }}
+          className="mb-24 scroll-mt-28"
+        >
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <div className="inline-flex items-center gap-2 bg-sage/10 px-4 py-1.5 rounded-full text-xs text-sage font-semibold mb-3 border border-sage/20">
+              <Eye className="w-3.5 h-3.5" />
+              <span>Galeri & Sudut Estetik Kedai</span>
+            </div>
+            <h3 className="font-serif text-3xl md:text-4xl text-charcoal mb-3">
+              Jelajahi Spot Favorite Kopi Tenang Jiwa
+            </h3>
+            <p className="text-stone text-sm max-w-lg mx-auto font-light">
+              Intip suasana tenang dan sudut-sudut estetik kedai kami untuk nemenin waktu santai, nugas, atau kumpul bareng sahabat.
             </p>
           </div>
-          <motion.img src="https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&q=80&w=800" alt="Kopi Tenang Jiwa"
-            className="absolute right-0 top-0 w-1/2 h-full object-cover rounded-l-[100px] hidden md:block opacity-90 animate-float"
-            initial={{ opacity: 0, x: 20 }} animate={{ opacity: 0.9, x: 0 }} transition={{ duration: 1, delay: 0.2 }}
-          />
-        </motion.div>
+
+          {/* Spot Category Filter Tabs */}
+          <div className="flex gap-2 overflow-x-auto scrollbar-hide justify-start md:justify-center mb-10 pb-2">
+            {SPOT_CATEGORIES.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedSpotCategory(cat)}
+                className={`px-5 py-2.5 rounded-full text-xs md:text-sm font-medium whitespace-nowrap transition-all duration-300 ${
+                  selectedSpotCategory === cat
+                    ? "bg-charcoal text-white shadow-md scale-105"
+                    : "bg-white border border-latte text-charcoal hover:bg-bone"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          {/* Spot Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredSpots.map((spot, idx) => (
+              <motion.div
+                key={spot.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                whileHover={{ y: -6 }}
+                onClick={() => setActiveSpotModal(spot)}
+                className="bg-white rounded-3xl overflow-hidden border border-latte shadow-elegant group cursor-pointer flex flex-col justify-between"
+              >
+                <div>
+                  {/* Spot Image */}
+                  <div className="h-56 overflow-hidden relative">
+                    <img
+                      src={spot.image}
+                      alt={spot.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                    <div className="absolute top-4 left-4 z-10">
+                      <span className="bg-white/95 backdrop-blur-md text-charcoal text-[11px] font-semibold px-3 py-1 rounded-full shadow-sm border border-latte">
+                        {spot.category}
+                      </span>
+                    </div>
+
+                    {/* Hover Overlay Zoom Icon */}
+                    <div className="absolute inset-0 bg-charcoal/40 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center text-white gap-2">
+                      <div className="w-11 h-11 rounded-full bg-white/90 text-charcoal flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                        <Maximize2 className="w-5 h-5 text-sage" />
+                      </div>
+                      <span className="text-xs font-medium tracking-wide">Lihat Detail Spot</span>
+                    </div>
+                  </div>
+
+                  {/* Spot Content */}
+                  <div className="p-6">
+                    <div className="flex items-center justify-between gap-2 mb-2">
+                      <h4 className="font-serif text-lg font-semibold text-charcoal group-hover:text-sage transition-colors">
+                        {spot.title}
+                      </h4>
+                    </div>
+                    <p className="text-xs text-stone font-light leading-relaxed mb-4 line-clamp-2">
+                      {spot.description}
+                    </p>
+
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-2 text-[10px] text-stone">
+                      <span className="bg-bone px-2.5 py-1 rounded-full border border-latte flex items-center gap-1 font-medium">
+                        ✨ {spot.ambiance}
+                      </span>
+                      <span className="bg-sage/10 text-sage px-2.5 py-1 rounded-full border border-sage/20 font-medium">
+                        👥 {spot.capacity}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Footer Action */}
+                <div className="px-6 pb-6 pt-0 flex items-center justify-between text-xs text-sage font-medium group-hover:translate-x-1 transition-transform">
+                  <span>Pratinjau Sudut</span>
+                  <ChevronRight className="w-4 h-4" />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
 
         {/* Mood-Based Menu Matcher */}
         <motion.section initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mb-12">
@@ -851,7 +1359,7 @@ export default function Template3() {
         </motion.section>
 
         {/* Combo Builder (Paket Santai) */}
-        <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-20">
+        <motion.section id="paket-santai-section" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-20 scroll-mt-28">
           <div className="text-center mb-8">
             <div className="inline-flex items-center gap-2 bg-sage/10 px-4 py-1.5 rounded-full text-xs text-sage font-medium mb-4">
               <Package className="w-3.5 h-3.5" /><span>Lebih Hemat!</span>
@@ -907,7 +1415,7 @@ export default function Template3() {
         </motion.section>
 
         {/* Paket Spesial & Celebration Cards Section */}
-        <motion.section initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-20">
+        <motion.section id="paket-special-section" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-20 scroll-mt-28">
           <div className="text-center mb-10">
             <div className="inline-flex items-center gap-2 bg-sage/10 px-4 py-1.5 rounded-full text-xs text-sage font-medium mb-3 border border-sage/20">
               <Gift className="w-3.5 h-3.5" /><span>Penawaran Spesial & Perayaan</span>
@@ -1524,6 +2032,110 @@ export default function Template3() {
                 )}
               </AnimatePresence>
             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Spot Lightbox Preview Modal */}
+      <AnimatePresence>
+        {activeSpotModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setActiveSpotModal(null)}
+            className="fixed inset-0 z-[115] bg-charcoal/70 backdrop-blur-md flex items-center justify-center p-4 md:p-6"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col md:flex-row relative border border-latte"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setActiveSpotModal(null)}
+                className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-charcoal/60 text-white hover:bg-charcoal flex items-center justify-center backdrop-blur-sm transition-colors"
+                aria-label="Tutup Modal"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              {/* Spot Image Half */}
+              <div className="w-full md:w-1/2 h-64 md:h-auto relative bg-charcoal overflow-hidden">
+                <img
+                  src={activeSpotModal.image}
+                  alt={activeSpotModal.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent md:hidden" />
+                <div className="absolute bottom-4 left-4 md:hidden text-white">
+                  <span className="bg-sage/90 text-white text-[10px] font-semibold px-3 py-1 rounded-full">
+                    {activeSpotModal.category}
+                  </span>
+                  <h3 className="font-serif text-xl font-bold mt-1">{activeSpotModal.title}</h3>
+                </div>
+              </div>
+
+              {/* Spot Details Half */}
+              <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col justify-between overflow-y-auto custom-scrollbar">
+                <div>
+                  <div className="hidden md:flex items-center gap-2 mb-3">
+                    <span className="bg-sage/15 text-sage text-xs font-semibold px-3.5 py-1 rounded-full border border-sage/30">
+                      {activeSpotModal.category}
+                    </span>
+                    <span className="text-xs font-medium text-stone">✨ {activeSpotModal.ambiance}</span>
+                  </div>
+
+                  <h3 className="hidden md:block font-serif text-2xl font-bold text-charcoal mb-2">
+                    {activeSpotModal.title}
+                  </h3>
+
+                  <p className="text-xs md:text-sm text-stone font-light leading-relaxed mb-6">
+                    {activeSpotModal.description}
+                  </p>
+
+                  <div className="bg-bone p-4 rounded-2xl border border-latte space-y-2 mb-6">
+                    <p className="text-[11px] font-medium text-stone uppercase tracking-wider mb-2">
+                      Fasilitas & Karakteristik Spot:
+                    </p>
+                    <div className="grid grid-cols-1 gap-2">
+                      {activeSpotModal.features.map((feat, i) => (
+                        <div key={i} className="flex items-center gap-2 text-xs text-charcoal/90">
+                          <Check className="w-4 h-4 text-sage shrink-0" />
+                          <span>{feat}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 text-xs text-stone bg-white p-3 rounded-xl border border-latte mb-6">
+                    <Users className="w-4 h-4 text-sage shrink-0" />
+                    <span>Kapasitas Area: <strong>{activeSpotModal.capacity}</strong></span>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-latte/60 flex flex-col sm:flex-row gap-3">
+                  <button
+                    onClick={() => {
+                      setActiveSpotModal(null);
+                      scrollToSection("menu-section");
+                    }}
+                    className="flex-1 bg-sage hover:bg-sage/90 text-white py-3 rounded-2xl text-xs sm:text-sm font-medium transition-all shadow-md text-center"
+                  >
+                    Pesan & Pesan Meja
+                  </button>
+                  <button
+                    onClick={() => setActiveSpotModal(null)}
+                    className="bg-bone hover:bg-latte text-charcoal px-5 py-3 rounded-2xl text-xs sm:text-sm font-medium transition-colors border border-latte text-center"
+                  >
+                    Tutup
+                  </button>
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
